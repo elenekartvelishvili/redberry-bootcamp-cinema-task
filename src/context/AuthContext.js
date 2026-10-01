@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
 
 
   useEffect(() => {
-    if (!getToken()) 
+    if (!getToken())  return;
     loadUser()
       .catch(() => setToken(null)) 
       .finally(() => setLoading(false));
