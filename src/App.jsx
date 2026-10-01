@@ -1,5 +1,12 @@
+import Navbar from './components/Navbar';
+
 function App() {
-  return <h1>Kino XII</h1>;
+  return (
+    <>
+      <Navbar />
+      <h1>Kino XII</h1>
+    </>
+  );
 }
 
 export default App;
