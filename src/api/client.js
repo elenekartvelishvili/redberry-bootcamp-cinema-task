@@ -17,7 +17,12 @@ constructor(status,body) {
 }
 export async function request(path) {
 
-    const response=await fetch(BASE_URL+path);
+    const headers={Accept:'application/json'};
+    const token=getToken();
+    if(token){
+        headers.Authorization=`Bearer ${token}`;
+    }
+    const response=await fetch(BASE_URL+path,{headers});
     const data=await response.json();
 
     if(!response.ok){
