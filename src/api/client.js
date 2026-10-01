@@ -29,16 +29,21 @@ export const setUnauthorizedHandler = (fn) => {
 export async function request(path, { method = 'GET', body, params } = {}) {
   const url = new URL(BASE_URL + path);
   if (params) {
+
     for (const [key, value] of Object.entries(params)) {
+
       if (value !== undefined && value !== null && value !== '') {
         url.searchParams.set(key, value);
+     
       }
     }
   }
 
-  
+
   const headers = { Accept: 'application/json' };
+
   const token = getToken();
+  
   if (token) headers.Authorization = `Bearer ${token}`;
 
   let payload;
