@@ -45,9 +45,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   const finishAuth = async (res) => {
-    const data = unwrap(res);
-    setToken(data.token);
-    await loadUser();
+   const { token, user } = unwrap(res);
+    setToken(token);
+    setUser(user);
     setModal(null);
 
 
