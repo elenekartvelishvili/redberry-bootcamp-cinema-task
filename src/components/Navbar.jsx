@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 function Navbar() {
-  const { user, isLoggedIn, modal, openLogin, openRegister, logout } = useAuth();
+  const { user, isLoggedIn, openLogin, openRegister, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -42,8 +42,6 @@ function Navbar() {
           <button onClick={openRegister}>Sign up</button>
         </>
       )}
-
-      <p>modal: {String(modal)}</p> {/* TEMP: delete later */}
     </nav>
   );
 }
