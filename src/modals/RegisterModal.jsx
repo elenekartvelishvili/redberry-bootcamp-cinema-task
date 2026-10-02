@@ -45,7 +45,7 @@ function RegisterModal() {
     setFieldErrors((prev) => {
       const updated = { ...prev };
       if (prev[name] !== undefined) updated[name] = validateField(name, next);
-      // changing password can make "confirm" right or wrong again
+     
       if (name === 'password' && prev.confirmPassword !== undefined) {
         updated.confirmPassword = validateField('confirmPassword', next);
       }
