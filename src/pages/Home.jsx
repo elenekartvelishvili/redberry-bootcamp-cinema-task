@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getNowPlaying, getComingSoon } from '../api/movies';
 import MovieCard from '../components/MovieCard';
-
+import Hero from '../components/Hero';
 function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
   const [comingSoon, setComingSoon] = useState([]);
@@ -40,6 +40,7 @@ function Home() {
 
   return (
     <main>
+          <Hero />
       <section>
         <h2>Now Playing</h2>
         <Link to="/sessions">See All</Link>
