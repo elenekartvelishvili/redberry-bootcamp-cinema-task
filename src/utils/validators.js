@@ -9,3 +9,14 @@ export const validatePassword = (value) => {
   if (value.length < 3) return 'Password must be at least 3 characters';
   return '';
 };
+export const validateUsername = (value) => {
+  if (!value.trim()) return 'Username is required';
+  if (value.trim().length < 3) return 'Username must be at least 3 characters';
+  return '';
+};
+
+export const validateConfirmPassword = (value, password) => {
+  if (!value) return 'Please confirm your password';
+  if (value !== password) return 'Passwords do not match';
+  return '';
+};
