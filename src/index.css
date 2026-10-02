@@ -59,3 +59,36 @@ img {
 .text-label-m { font-size: 14px; font-weight: 600; line-height: 1; }
 .text-label-s { font-size: 12px; font-weight: 600; line-height: 1; }
 .text-button  { font-size: 14px; font-weight: 800; line-height: 1; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--tint-white);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.badge--red {
+  background: var(--tint-red);
+  color: var(--color-red);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 13px 22px;
+  border-radius: 999px;
+}
+
+.btn--red {
+  background: var(--color-red);
+}
+
+.btn--ghost {
+  background: var(--tint-white);
+}
