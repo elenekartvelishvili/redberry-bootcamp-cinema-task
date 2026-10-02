@@ -5,6 +5,7 @@ import Modal from './components/Modal';
 import Home from './pages/Home';
 import Sessions from './pages/Sessions';
 import Profile from './pages/Profile';
+import LoginModal from './components/LoginModal';
 
 function App() {
   const { modal, closeModal } = useAuth();
@@ -12,17 +13,15 @@ function App() {
   return (
     <>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sessions" element={<Sessions />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
 
-      {modal === 'login' && (
-        <Modal title="Log in" onClose={closeModal}>
-          <p>login form goes here</p>
-        </Modal>
-      )}
+      {modal === 'login' && <LoginModal />}
+
       {modal === 'register' && (
         <Modal title="Sign up" onClose={closeModal}>
           <p>register form goes here</p>
