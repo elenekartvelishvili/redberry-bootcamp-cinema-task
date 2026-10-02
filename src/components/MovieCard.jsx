@@ -14,7 +14,7 @@ function MovieCard({ movie }) {
       ) : (
         <>
           <p>from ₾{movie.fromPrice}</p>
-          <Link to={`/movies/${movie.id}`}>Buy Ticket</Link>
+          <Link to={`/movies/${movie.slug}`}>Buy Ticket</Link>
         </>
       )}
     </div>
