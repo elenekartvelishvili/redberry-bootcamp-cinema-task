@@ -58,3 +58,15 @@
   border: 1px solid var(--text-secondary);
   border-radius: 999px;
 }
+.soon-card__notify:disabled {
+  cursor: default;
+}
+
+.soon-card__notify--done {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.soon-card__error {
+  color: var(--color-red);
+}
