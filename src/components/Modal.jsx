@@ -1,30 +1,38 @@
-function Modal({ title, onClose, children }) {
+import { useEffect } from 'react';
+import closeIcon from '../assets/icons/close.svg';
+import './Modal.css';
+
+function Modal({ title, subtitle, onClose, className = '', children }) {
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
   return (
-    <div onClick={onClose} style={overlayStyle}>
-      <div onClick={(e) => e.stopPropagation()} style={boxStyle}>
-        <button onClick={onClose}>X</button>
-        <h2>{title}</h2>
+    <div className="modal-overlay" onClick={onClose}>
+      <div
+        className={`modal ${className}`}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+      >
+        <div className="modal__header">
+          <div className="modal__titles">
+            <h2 className="text-h2">{title}</h2>
+            {subtitle && <p className="modal__subtitle text-body-s">{subtitle}</p>}
+          </div>
+          <button className="modal__close" onClick={onClose} aria-label="Close">
+            <img src={closeIcon} alt="" width="24" height="24" />
+          </button>
+        </div>
+
         {children}
       </div>
     </div>
   );
 }
-
-// TEMPORARY inline styles, so we can see it. Real styling comes later with Figma.
-const overlayStyle = {
-  position: 'fixed',
-  inset: 0,
-  background: 'rgba(0, 0, 0, 0.6)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
-
-const boxStyle = {
-  background: 'white',
-  color: 'black',
-  padding: '24px',
-  minWidth: '320px',
-};
 
 export default Modal;
