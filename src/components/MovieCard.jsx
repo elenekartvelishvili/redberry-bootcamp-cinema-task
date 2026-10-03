@@ -1,23 +1,28 @@
 import { Link } from 'react-router-dom';
-import { formatRuntime, formatDate } from '../utils/format';
+import './MovieCard.css';
 
 function MovieCard({ movie }) {
-  return (
-    <div>
-      <img src={movie.posterUrl} alt={movie.title} width="200" />
-      <h3>{movie.title}</h3>
-      <span>{movie.ageRating.code}</span>
-      <span>{formatRuntime(movie.runtimeMinutes)}</span>
+  const meta = [movie.genres[0]?.name, `${movie.runtimeMinutes} min`]
+    .filter(Boolean)
+    .join(' · ');
 
-      {movie.isComingSoon ? (
-        <p>Release: {formatDate(movie.releaseDate)}</p>
-      ) : (
-        <>
-          <p>from ₾{movie.fromPrice}</p>
-          <Link to={`/movies/${movie.slug}`}>Buy Ticket</Link>
-        </>
-      )}
-    </div>
+  return (
+    <Link to={`/movies/${movie.slug}`} className="movie-card">
+      <img src={movie.posterUrl} alt={movie.title} className="movie-card__poster" />
+
+      <div className="movie-card__info">
+        <h3 className="movie-card__title text-h3">{movie.title}</h3>
+        <p className="movie-card__meta text-body-s">{meta}</p>
+        <span className="badge badge--red badge--small text-label-s">
+          {movie.ageRating.code}
+        </span>
+      </div>
+
+      <div className="movie-card__footer">
+        <span className="text-label-s">From ₾ {movie.fromPrice}</span>
+        <span className="btn btn--red btn--small text-button">Buy Ticket</span>
+      </div>
+    </Link>
   );
 }
 
