@@ -1,5 +1,9 @@
 function Sessions() {
-  return <h1>Sessions</h1>;
+  return (
+    <main className="page">
+      <h1>Sessions</h1>
+    </main>
+  );
 }
 
 export default Sessions;

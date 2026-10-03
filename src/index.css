@@ -13,6 +13,8 @@
   --text-secondary: #a9a9a9;
 
   --font-family: 'Archivo', sans-serif;
+  --color-warning: #f5a524;
+  --color-success: #22c55e;
 }
 
 *,
@@ -49,7 +51,7 @@ img {
   max-width: 100%;
 }
 
-/* Text styles from Figma */
+
 .text-display { font-size: 40px; font-weight: 800; line-height: 1; }
 .text-h1      { font-size: 24px; font-weight: 800; line-height: 1; }
 .text-h2      { font-size: 20px; font-weight: 800; line-height: 1; }
@@ -91,4 +93,13 @@ img {
 
 .btn--ghost {
   background: var(--tint-white);
+}
+
+.btn--white {
+  background: var(--text-primary);
+  color: var(--bg-page);
+}
+
+.page {
+  padding-top: 111px;
 }
