@@ -1,0 +1,30 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 27px 34px 34px;
+}
+
+.footer__line {
+  height: 1px;
+  background: var(--bg-raised);
+}
+
+.footer__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__logo {
+  display: flex;
+  gap: 4px;
+}
+
+.footer__logo-accent {
+  color: var(--color-red);
+}
+
+.footer__copy {
+  color: var(--text-secondary);
+}
