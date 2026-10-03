@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getNowPlaying, getComingSoon } from '../api/movies';
-import MovieCard from '../components/MovieCard';
 import Hero from '../components/Hero';
+import MovieCard from '../components/MovieCard';
 import ComingSoonCard from '../components/ComingSoonCard';
 import './Home.css';
+
 function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
   const [comingSoon, setComingSoon] = useState([]);
@@ -39,6 +40,7 @@ function Home() {
       </div>
     );
   }
+
   return (
     <main>
       <Hero />
@@ -70,6 +72,9 @@ function Home() {
         <section className="home-section">
           <div className="home-section__header">
             <h2 className="text-h1">COMING SOON...</h2>
+            <Link to="/sessions" className="home-section__link text-label-m">
+              See all
+            </Link>
           </div>
 
           {comingSoon.length === 0 ? (
@@ -87,8 +92,6 @@ function Home() {
       </div>
     </main>
   );
-
 }
-
 
 export default Home;
