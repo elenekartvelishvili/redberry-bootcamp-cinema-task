@@ -110,3 +110,12 @@ img {
 .btn--small {
   padding: 10px 22px;
 }
+
+.btn--full {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
