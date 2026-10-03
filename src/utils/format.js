@@ -10,3 +10,8 @@ export const formatDate = (dateString) =>
     month: 'short',
     year: 'numeric',
   });
+
+  export const formatDayMonth = (dateString) =>
+  new Date(dateString)
+    .toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })
+    .toUpperCase();

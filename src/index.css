@@ -103,3 +103,10 @@ img {
 .page {
   padding-top: 111px;
 }
+.badge--small {
+  padding: 4px 7px;
+}
+
+.btn--small {
+  padding: 10px 22px;
+}
