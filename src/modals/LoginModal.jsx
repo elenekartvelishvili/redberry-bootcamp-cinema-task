@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Modal from '../components/Modal';
+import FormField from '../components/FormField';
 import { validateEmail, validatePassword } from '../utils/validators';
+import './AuthForm.css';
 
 const validators = {
   email: validateEmail,
@@ -29,10 +31,7 @@ function LoginModal() {
     if (fieldErrors[name] !== undefined) checkField(name, value);
   };
 
-  const borderFor = (name) => {
-    if (fieldErrors[name] === undefined) return '1px solid #ccc';
-    return fieldErrors[name] ? '1px solid red' : '1px solid green';
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,46 +54,49 @@ function LoginModal() {
     }
   };
 
-  return (
-    <Modal title="Log in" onClose={closeModal}>
-      <form onSubmit={handleSubmit} noValidate>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => handleChange('email', e.target.value, setEmail)}
-          onBlur={() => checkField('email', email)}
-          style={{ border: borderFor('email') }}
-        />
-        {fieldErrors.email && <p>{fieldErrors.email}</p>}
+   return (
+    <Modal
+      title="Log in"
+      subtitle="Welcome back to Kino XII"
+      onClose={closeModal}
+      className="modal--login"
+    >
+      <form className="auth-form" onSubmit={handleSubmit} noValidate>
+        <div className="auth-form__fields">
+          <FormField
+            label="Email"
+            type="email"
+            placeholder="example@gmail.com"
+            value={email}
+            onChange={(e) => handleChange('email', e.target.value, setEmail)}
+            onBlur={() => checkField('email', email)}
+            error={fieldErrors.email}
+          />
+          <FormField
+            label="Password"
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => handleChange('password', e.target.value, setPassword)}
+            onBlur={() => checkField('password', password)}
+            error={fieldErrors.password}
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => handleChange('password', e.target.value, setPassword)}
-          onBlur={() => checkField('password', password)}
-          style={{ border: borderFor('password') }}
-        />
-        {fieldErrors.password && <p>{fieldErrors.password}</p>}
+        {error && <p className="auth-form__api-error text-label-s">{error}</p>}
 
-        {error && <p>{error}</p>}
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Log In'}
-        </button>
+        <div className="auth-form__actions">
+          <button type="submit" className="btn btn--red btn--full text-button" disabled={loading}>
+            {loading ? 'Logging in...' : 'Log in'}
+          </button>
+          <p className="auth-form__switch text-body-m">
+            Don't have an account?
+            <button type="button" className="auth-form__switch-btn text-button" onClick={openRegister}>
+              Sign up
+            </button>
+          </p>
+        </div>
       </form>
-
-      <p>
-        Don't have an account?{' '}
-        <button type="button" onClick={openRegister}>
-          Sign Up
-        </button>
-      </p>
-
-      <button type="button" onClick={closeModal}>
-        Close
-      </button>
     </Modal>
   );
 }
