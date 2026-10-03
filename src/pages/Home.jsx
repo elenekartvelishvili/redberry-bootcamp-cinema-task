@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { getNowPlaying, getComingSoon } from '../api/movies';
 import MovieCard from '../components/MovieCard';
 import Hero from '../components/Hero';
+import ComingSoonCard from '../components/ComingSoonCard';
+import './Home.css';
 function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
   const [comingSoon, setComingSoon] = useState([]);
@@ -37,38 +39,56 @@ function Home() {
       </div>
     );
   }
-
   return (
     <main>
-          <Hero />
-      <section>
-        <h2>Now Playing</h2>
-        <Link to="/sessions">See All</Link>
-        {nowPlaying.length === 0 ? (
-          <p>No movies are playing right now.</p>
-        ) : (
-          <div style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
-            {nowPlaying.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
-        )}
-      </section>
+      <Hero />
 
-      <section>
-        <h2>Coming Soon</h2>
-        {comingSoon.length === 0 ? (
-          <p>No upcoming movies yet.</p>
-        ) : (
-          <div style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
-            {comingSoon.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
+      <div className="home__sections">
+        <section className="home-section">
+          <div className="home-section__header">
+            <h2 className="text-h1">NOW PLAYING</h2>
+            <Link to="/sessions" className="home-section__link text-label-m">
+              See all
+            </Link>
           </div>
-        )}
-      </section>
+
+          {nowPlaying.length === 0 ? (
+            <p className="text-body-m">No movies are playing right now.</p>
+          ) : (
+            <div className="home-section__row-wrap">
+              <div className="home-section__row">
+                {nowPlaying.map((movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
+        <hr className="home__divider" />
+
+        <section className="home-section">
+          <div className="home-section__header">
+            <h2 className="text-h1">COMING SOON...</h2>
+          </div>
+
+          {comingSoon.length === 0 ? (
+            <p className="text-body-m">No upcoming movies yet.</p>
+          ) : (
+            <div className="home-section__row-wrap">
+              <div className="home-section__row home-section__row--soon">
+                {comingSoon.map((movie) => (
+                  <ComingSoonCard key={movie.id} movie={movie} />
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
     </main>
   );
+
 }
+
 
 export default Home;
