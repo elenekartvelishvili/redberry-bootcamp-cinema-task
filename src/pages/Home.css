@@ -58,3 +58,11 @@
 .home-section__row--soon {
   gap: 20px;
 }
+
+.home__status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 70px;
+}
