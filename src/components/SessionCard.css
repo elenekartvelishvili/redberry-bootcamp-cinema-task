@@ -1,0 +1,73 @@
+.session-card {
+  width: 252px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: var(--bg-card);
+  text-align: left;
+  transition: border-color 0.2s;
+}
+
+.session-card:hover:not(:disabled) {
+  border-color: var(--color-red);
+}
+
+.session-card:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.session-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.session-card__format {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--bg-raised);
+}
+
+.session-card__bottom {
+  display: flex;
+  gap: 8px;
+}
+
+.session-card__where {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.session-card__lang {
+  color: var(--text-secondary);
+}
+
+.session-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+}
+
+.session-card__seats {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-green);
+}
+
+.session-card__seats--few {
+  color: var(--color-red);
+}
+
+.session-card__sold {
+  color: var(--text-secondary);
+}
