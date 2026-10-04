@@ -3,8 +3,13 @@ import { useSearchParams } from 'react-router-dom';
 import { getSessions } from '../api/sessions';
 import { toDateKey } from '../utils/format';
 
+import { useOptions } from '../context/OptionsContext';
+import FilterSidebar from '../components/FilterSidebar';
+import './Sessions.css';
+
 function Sessions() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { options } = useOptions();
 
   const readList = (name) => {
     const value = searchParams.get(name);
@@ -66,43 +71,57 @@ function Sessions() {
     
   }, [searchParams, reloadKey]);
 
- if(loading) {
-  return (
-<main className="page">
-  <p>Loading sessions...</p>
-  </main>
-  );
-}
-if(error) {
-  return (
-    <main className="page">
-      <p>{error}</p>
-      <button onClick={() =>  setReloadKey(reloadKey + 1)}>Try again</button>
-    </main>
-  ); 
+
 
 }
 
-return (
-  <main className="page">
-    <h1>Sessions</h1>
-    <p>
-      Showing {meta.totalSessions} sessions · page {meta.currentPage} of {meta.lastPage}
-      </p>
-    
-   <button onClick={() => updateFilters({ venues: ['galleria'] })}>Test: Galleria only</button>
-    <button onClick={() => updateFilters({ page: page + 1 })}>Test: next page</button>
-
- {movies.map((group) => (
-        <div key={group.movie.id}>
-          <h3>{group.movie.title}</h3>
-          <p>{group.sessions.map((s) => `${s.time} ${s.venue.name}`).join(' | ')}</p>
+  return (
+    <main className="page sessions">
+      <aside className="sessions__side">
+        <div className="sessions__header">
+          <h1 className="text-h1">Sessions</h1>
+          <p className="sessions__subtitle text-body-m">Browse showtimes across all venues</p>
         </div>
-      ))}
-    </main>
-    
-    );
 
-  }
+        <FilterSidebar
+          options={options}
+          venues={venues}
+          formats={formats}
+          languages={languages}
+          times={times}
+          date={date}
+          onChange={updateFilters}
+        />
+      </aside>
+
+      <section className="sessions__main">
+        {loading ? (
+          <p className="text-body-m">Loading sessions...</p>
+        ) : error ? (
+          <div className="sessions__status">
+            <p className="text-body-m">{error}</p>
+            <button
+              className="btn btn--ghost text-button"
+              onClick={() => setReloadKey(reloadKey + 1)}
+            >
+              Try again
+            </button>
+          </div>
+        ) : (
+          <>
+            <p className="text-label-m">Showing {meta.totalSessions} sessions</p>
+            {movies.map((group) => (
+              <div key={group.movie.id}>
+                <h3>{group.movie.title}</h3>
+                <p>{group.sessions.map((s) => `${s.time} ${s.venue.name}`).join(' | ')}</p>
+              </div>
+            ))}
+          </>
+        )}
+      </section>
+    </main>
+  );
+
+  
 
 export default Sessions;

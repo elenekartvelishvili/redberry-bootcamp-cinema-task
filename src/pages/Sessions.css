@@ -1,0 +1,41 @@
+.sessions {
+  display: flex;
+  gap: 51px;
+  padding-left: 51px;
+  padding-right: 51px;
+  padding-bottom: 80px;
+}
+
+.sessions__side {
+  flex-shrink: 0;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.sessions__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sessions__subtitle {
+  color: var(--text-secondary);
+}
+
+.sessions__main {
+  flex: 1;
+  min-width: 0;
+  padding-top: 83px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sessions__status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
