@@ -66,7 +66,7 @@ function Sessions() {
     
   }, [searchParams, reloadKey]);
 
- if(loading) 
+ if(loading) {
   return (
 <main className="page">
   <p>Loading sessions...</p>
@@ -103,6 +103,6 @@ return (
     
     );
 
-
+  }
 
 export default Sessions;
