@@ -4,6 +4,7 @@ import { getSessions } from '../api/sessions';
 import { toDateKey } from '../utils/format';
 import { useOptions } from '../context/OptionsContext';
 import FilterSidebar from '../components/FilterSidebar';
+import SessionGroup from '../components/SessionGroup';
 import './Sessions.css';
 
 function Sessions() {
@@ -67,8 +68,13 @@ function Sessions() {
     return () => {
       ignore = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [searchParams, reloadKey]);
+
+  const handleSelectSession = (session) => {
+    // es droebitiaaa shecvale ar dagaviwkdes
+    console.log('Selected session', session.id);
+  };
 
   return (
     <main className="page sessions">
@@ -104,13 +110,28 @@ function Sessions() {
           </div>
         ) : (
           <>
-            <p className="text-label-m">Showing {meta.totalSessions} sessions</p>
-            {movies.map((group) => (
-              <div key={group.movie.id}>
-                <h3>{group.movie.title}</h3>
-                <p>{group.sessions.map((s) => `${s.time} ${s.venue.name}`).join(' | ')}</p>
+            <p className="text-label-m">
+              {meta.totalSessions > 0
+                ? `Showing ${meta.totalSessions} sessions`
+                : 'No sessions found'}
+            </p>
+
+            {movies.length === 0 ? (
+              <div className="sessions__status">
+                <p className="text-body-m">Nothing matches these filters. Try removing some.</p>
               </div>
-            ))}
+            ) : (
+              <div className="sessions__list">
+                {movies.map((group) => (
+                  <SessionGroup
+                    key={group.movie.id}
+                    movie={group.movie}
+                    sessions={group.sessions}
+                    onSelect={handleSelectSession}
+                  />
+                ))}
+              </div>
+            )}
           </>
         )}
       </section>

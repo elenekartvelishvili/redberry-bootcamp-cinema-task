@@ -39,3 +39,9 @@
   align-items: flex-start;
   gap: 12px;
 }
+
+.sessions__list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
