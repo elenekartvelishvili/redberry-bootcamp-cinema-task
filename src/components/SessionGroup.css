@@ -1,0 +1,45 @@
+.session-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.session-group + .session-group {
+  padding-top: 32px;
+  border-top: 1px solid var(--bg-raised);
+}
+
+.session-group__movie {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.session-group__poster {
+  width: 56px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.session-group__info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.session-group__title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.session-group__runtime {
+  color: var(--text-secondary);
+}
+
+.session-group__cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
