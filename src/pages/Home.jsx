@@ -30,17 +30,6 @@ function Home() {
     load();
   }, [load]);
 
-  if (loading) return <p>Loading movies...</p>;
-
-  if (error) {
-    return (
-      <div>
-        <p>Couldn't load movies: {error}</p>
-        <button onClick={load}>Try again</button>
-      </div>
-    );
-  }
-
    return (
     <main>
       <Hero />
