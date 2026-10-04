@@ -15,6 +15,9 @@
   --font-family: 'Archivo', sans-serif;
   --color-warning: #f5a524;
   --color-success: #22c55e;
+
+  --color--green:#4ade80;
+  --text-disabled:#505261;
 }
 
 *,
@@ -119,3 +122,4 @@ img {
   opacity: 0.6;
   cursor: default;
 }
+
