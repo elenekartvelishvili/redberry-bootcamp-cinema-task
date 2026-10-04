@@ -32,12 +32,15 @@ export async function request(path, { method = 'GET', body, params } = {}) {
 
     for (const [key, value] of Object.entries(params)) {
 
-      if (value !== undefined && value !== null && value !== '') {
-        url.searchParams.set(key, value);
-     
+      if(Array.isArray(value)) {
+        value.forEach((v) => url.searchParams.append(`${key}[]`, v));
       }
+      else if (value !== undefined && value !== null && value !== '') {
+        url.searchParams.append(key, value);  
+
     }
   }
+}
 
 
   const headers = { Accept: 'application/json' };
@@ -71,7 +74,7 @@ export async function request(path, { method = 'GET', body, params } = {}) {
 
 
   if (!response.ok) {
-    if (response.status === 401 && token && onUnauthorized) {
+    if (response.status === 401 && token && onUnauthorized && path!=='/logout') {
       onUnauthorized();
     }
 
