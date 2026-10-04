@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSessions } from '../api/sessions';
 import { toDateKey } from '../utils/format';
-
 import { useOptions } from '../context/OptionsContext';
 import FilterSidebar from '../components/FilterSidebar';
 import './Sessions.css';
@@ -68,12 +67,8 @@ function Sessions() {
     return () => {
       ignore = true;
     };
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, reloadKey]);
-
-
-
-}
 
   return (
     <main className="page sessions">
@@ -121,7 +116,6 @@ function Sessions() {
       </section>
     </main>
   );
-
-  
+}
 
 export default Sessions;
