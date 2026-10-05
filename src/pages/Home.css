@@ -66,3 +66,7 @@
   gap: 12px;
   padding: 0 70px;
 }
+
+.home-section__row--recent {
+  gap: 20px;
+}

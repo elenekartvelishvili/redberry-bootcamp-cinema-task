@@ -4,6 +4,11 @@ import { getNowPlaying, getComingSoon } from '../api/movies';
 import Hero from '../components/Hero';
 import MovieCard from '../components/MovieCard';
 import ComingSoonCard from '../components/ComingSoonCard';
+import { useAuth } from '../context/AuthContext';
+import { getRecentlyViewed } from '../utils/recentlyViewed';
+import RecentCard from '../components/RecentCard';
+
+
 import './Home.css';
 
 function Home() {
@@ -11,6 +16,8 @@ function Home() {
   const [comingSoon, setComingSoon] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { isLoggedIn } = useAuth();
+  const recentMovies = getRecentlyViewed();
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -46,6 +53,20 @@ function Home() {
           </div>
         ) : (
           <>
+              {isLoggedIn && recentMovies.length > 0 && (
+              <>
+                <section className="home-section">
+                  <h2 className="text-h1">Recently viewed</h2>
+                  <div className="home-section__row home-section__row--recent">
+                    {recentMovies.map((movie) => (
+                      <RecentCard key={movie.id} movie={movie} />
+                    ))}
+                  </div>
+                </section>
+
+                <hr className="home__divider" />
+              </>
+            )}
             <section className="home-section">
               <div className="home-section__header">
                 <h2 className="text-h1">NOW PLAYING</h2>
