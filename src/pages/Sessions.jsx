@@ -7,6 +7,7 @@ import FilterSidebar from '../components/FilterSidebar';
 import SessionGroup from '../components/SessionGroup';
 import SortSelect from '../components/SortSelect';
 import Pagination from '../components/Pagination';
+import SessionsSkeleton from '../components/SessionsSkeleton';
 import './Sessions.css';
 
 function Sessions() {
@@ -92,7 +93,7 @@ function Sessions() {
 
   const renderList = () => {
     if (loading) {
-      return <p className="text-body-m">Loading sessions...</p>;
+      return<SessionsSkeleton />;
     }
 
     if (error) {
@@ -169,6 +170,7 @@ function Sessions() {
             />
           )}
         </div>
+
 
         {renderList()}
       </section>
