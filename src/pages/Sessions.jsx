@@ -5,6 +5,7 @@ import { toDateKey } from '../utils/format';
 import { useOptions } from '../context/OptionsContext';
 import FilterSidebar from '../components/FilterSidebar';
 import SessionGroup from '../components/SessionGroup';
+import SortSelect from '../components/SortSelect';
 import './Sessions.css';
 
 function Sessions() {
@@ -72,8 +73,56 @@ function Sessions() {
   }, [searchParams, reloadKey]);
 
   const handleSelectSession = (session) => {
-    // es droebitiaaa shecvale ar dagaviwkdes
+    // TODO: temporary
     console.log('Selected session', session.id);
+  };
+
+  let countText = '';
+  if (!loading && !error) {
+    countText = meta.totalSessions > 0
+      ? `Showing ${meta.totalSessions} sessions`
+      : 'No sessions found';
+  }
+
+  const renderList = () => {
+    if (loading) {
+      return <p className="text-body-m">Loading sessions...</p>;
+    }
+
+    if (error) {
+      return (
+        <div className="sessions__status">
+          <p className="text-body-m">{error}</p>
+          <button
+            className="btn btn--ghost text-button"
+            onClick={() => setReloadKey(reloadKey + 1)}
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+
+    if (movies.length === 0) {
+      return (
+        <div className="sessions__status">
+          <p className="text-body-m">Nothing matches these filters. Try removing some.</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="sessions__list">
+        {movies.map((group) => (
+          <SessionGroup
+            key={group.movie.id}
+            movie={group.movie}
+            sessions={group.sessions}
+            onSelect={handleSelectSession}
+          />
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -96,47 +145,21 @@ function Sessions() {
       </aside>
 
       <section className="sessions__main">
-        {loading ? (
-          <p className="text-body-m">Loading sessions...</p>
-        ) : error ? (
-          <div className="sessions__status">
-            <p className="text-body-m">{error}</p>
-            <button
-              className="btn btn--ghost text-button"
-              onClick={() => setReloadKey(reloadKey + 1)}
-            >
-              Try again
-            </button>
-          </div>
-        ) : (
-          <>
-            <p className="text-label-m">
-              {meta.totalSessions > 0
-                ? `Showing ${meta.totalSessions} sessions`
-                : 'No sessions found'}
-            </p>
+        <div className="sessions__toolbar">
+          <p className="text-label-m">{countText}</p>
+          {options && (
+            <SortSelect
+              sorts={options.sorts}
+              value={sort}
+              onChange={(newSort) => updateFilters({ sort: newSort })}
+            />
+          )}
+        </div>
 
-            {movies.length === 0 ? (
-              <div className="sessions__status">
-                <p className="text-body-m">Nothing matches these filters. Try removing some.</p>
-              </div>
-            ) : (
-              <div className="sessions__list">
-                {movies.map((group) => (
-                  <SessionGroup
-                    key={group.movie.id}
-                    movie={group.movie}
-                    sessions={group.sessions}
-                    onSelect={handleSelectSession}
-                  />
-                ))}
-              </div>
-            )}
-          </>
-        )}
+        {renderList()}
       </section>
     </main>
   );
 }
 
-export default Sessions;
+export default Sessions;``
