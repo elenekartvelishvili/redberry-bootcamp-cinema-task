@@ -45,3 +45,10 @@
   flex-direction: column;
   gap: 32px;
 }
+
+.sessions__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+}
