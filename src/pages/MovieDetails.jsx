@@ -5,6 +5,7 @@ import { formatLongDate, toDateKey, getNextDays } from '../utils/format';
 import { useAuth } from '../context/AuthContext';
 import SessionTicket from '../components/SessionTicket';
 import timerIcon from '../assets/icons/timer.svg';
+import { addRecentlyViewed } from '../utils/recentlyViewed';
 import './MovieDetails.css';
 
 function InfoRow({ label, value }) {
@@ -29,15 +30,15 @@ const groupByHall = (sessions) => {
 
 function MovieDetails() {
   const { slug } = useParams();
-  const { user } = useAuth(); // B3
+  const { user } = useAuth(); 
 
-  // --- the movie ---
+
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [reloadKey, setReloadKey] = useState(0);
 
-  // --- B3: the sessions for the chosen date ---
+
   const [date, setDate] = useState(toDateKey(new Date()));
   const [venues, setVenues] = useState([]);
   const [sessionsLoading, setSessionsLoading] = useState(true);
@@ -94,7 +95,9 @@ function MovieDetails() {
     console.log('Selected session', session.id);
   };
 
-  // ↑ all hooks above this line. Early returns only below. ↓
+  useEffect(() => {
+    if (movie) addRecentlyViewed(movie);
+  }, [movie]);
 
   if (loading) {
     return (
@@ -103,6 +106,7 @@ function MovieDetails() {
       </main>
     );
   }
+    
 
   if (error) {
     return (
@@ -118,17 +122,16 @@ function MovieDetails() {
   const formatNames = movie.formats.map((format) => format.name).join(', ');
   const genreNames = movie.genres.map((genre) => genre.name).join(', ');
 
-  // B3: the age gate (only for logged-in users with a known age, on 16+/18+ films)
+
   const minAge = movie.ageRating.minAge;
   const tooYoung = user && user.age !== null && minAge >= 16 && user.age < minAge;
 
-  // B3: count all sessions of this day
+
   let sessionCount = 0;
   venues.forEach((venue) => {
     sessionCount += venue.sessions.length;
   });
 
-  // B4: the sessions area, with plain ifs like renderList on the Sessions page
   const renderSessions = () => {
     if (movie.isComingSoon) {
       return (
