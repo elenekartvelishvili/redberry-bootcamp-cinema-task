@@ -1,4 +1,4 @@
-import '../SessionsSkeleton.css'
+import './SessionsSkeleton.css'
 
 const Fake_Groups=[1,2,3,4];
 const Fake_Cards=[1,2,3,4];
