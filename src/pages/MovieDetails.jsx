@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovie } from '../api/movies';
-import { formatLongDate } from '../utils/format';
+import { getMovie, getMovieSessions } from '../api/movies';
+import { formatLongDate, toDateKey, getNextDays } from '../utils/format';
+import { useAuth } from '../context/AuthContext';
+import SessionTicket from '../components/SessionTicket';
 import timerIcon from '../assets/icons/timer.svg';
 import './MovieDetails.css';
 
@@ -14,13 +16,33 @@ function InfoRow({ label, value }) {
   );
 }
 
+
+const groupByHall = (sessions) => {
+  const halls = {};
+  sessions.forEach((session) => {
+    const hallName = session.hall.name;
+    if (!halls[hallName]) halls[hallName] = [];
+    halls[hallName].push(session);
+  });
+  return Object.entries(halls);
+};
+
 function MovieDetails() {
   const { slug } = useParams();
+  const { user } = useAuth(); // B3
 
+  // --- the movie ---
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [reloadKey, setReloadKey] = useState(0);
+
+  // --- B3: the sessions for the chosen date ---
+  const [date, setDate] = useState(toDateKey(new Date()));
+  const [venues, setVenues] = useState([]);
+  const [sessionsLoading, setSessionsLoading] = useState(true);
+  const [sessionsError, setSessionsError] = useState('');
+  const [sessionsReloadKey, setSessionsReloadKey] = useState(0);
 
   useEffect(() => {
     let ignore = false;
@@ -44,6 +66,36 @@ function MovieDetails() {
     };
   }, [slug, reloadKey]);
 
+
+  useEffect(() => {
+    let ignore = false;
+
+    setSessionsLoading(true);
+    setSessionsError('');
+
+    getMovieSessions(slug, date)
+      .then((data) => {
+        if (!ignore) setVenues(data);
+      })
+      .catch((err) => {
+        if (!ignore) setSessionsError(err.message);
+      })
+      .finally(() => {
+        if (!ignore) setSessionsLoading(false);
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [slug, date, sessionsReloadKey]);
+
+  const handleSelectSession = (session) => {
+    // TODO: temporary, replace with the booking modal on Tuesday
+    console.log('Selected session', session.id);
+  };
+
+  // ↑ all hooks above this line. Early returns only below. ↓
+
   if (loading) {
     return (
       <main className="page details-status">
@@ -62,8 +114,75 @@ function MovieDetails() {
       </main>
     );
   }
-    const formatNames = movie.formats.map((format) => format.name).join(', ');
+
+  const formatNames = movie.formats.map((format) => format.name).join(', ');
   const genreNames = movie.genres.map((genre) => genre.name).join(', ');
+
+  // B3: the age gate (only for logged-in users with a known age, on 16+/18+ films)
+  const minAge = movie.ageRating.minAge;
+  const tooYoung = user && user.age !== null && minAge >= 16 && user.age < minAge;
+
+  // B3: count all sessions of this day
+  let sessionCount = 0;
+  venues.forEach((venue) => {
+    sessionCount += venue.sessions.length;
+  });
+
+  // B4: the sessions area, with plain ifs like renderList on the Sessions page
+  const renderSessions = () => {
+    if (movie.isComingSoon) {
+      return (
+        <p className="text-body-m">
+          Tickets go on sale when the film opens on {formatLongDate(movie.releaseDate)}.
+        </p>
+      );
+    }
+
+    if (sessionsLoading) {
+      return <p className="text-body-m">Loading sessions...</p>;
+    }
+
+    if (sessionsError) {
+      return (
+        <div className="details-status-inline">
+          <p className="text-body-m">{sessionsError}</p>
+          <button
+            className="btn btn--ghost text-button"
+            onClick={() => setSessionsReloadKey(sessionsReloadKey + 1)}
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+
+    if (venues.length === 0) {
+      return <p className="text-body-m">No sessions on this day. Try another date.</p>;
+    }
+
+    return venues.map((group) => (
+      <div key={group.venue.id} className="details-venue">
+        <h3 className="text-button">{group.venue.name}</h3>
+        <div className="details-venue__halls">
+          {groupByHall(group.sessions).map(([hallName, hallSessions]) => (
+            <div key={hallName} className="details-hall">
+              <span className="text-label-s">Hall {hallName}</span>
+              <div className="details-hall__tickets">
+                {hallSessions.map((session) => (
+                  <SessionTicket
+                    key={session.id}
+                    session={session}
+                    disabled={tooYoung}
+                    onSelect={handleSelectSession}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ));
+  };
 
   return (
     <main>
@@ -98,8 +217,46 @@ function MovieDetails() {
       </section>
 
       <div className="details-body">
+      
         <section className="details-body__main">
-          {/* Part B: dates + sessions go here */}
+          <div className="details-sessions__header">
+            <h2 className="text-h2">Sessions</h2>
+            {!movie.isComingSoon && !sessionsLoading && !sessionsError && (
+              <p className="details-sessions__count text-body-s">
+                {sessionCount} sessions on this day
+              </p>
+            )}
+          </div>
+
+          {!movie.isComingSoon && (
+            <div className="details-days">
+              {getNextDays().map((day) => {
+                const key = toDateKey(day);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    className={`details-day ${key === date ? 'details-day--active' : ''}`}
+                    onClick={() => setDate(key)}
+                  >
+                    <span className="text-label-s">
+                      {day.toLocaleDateString('en-GB', { weekday: 'short' })}
+                    </span>
+                    <span className="text-h3">{day.getDate()}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {tooYoung && (
+            <p className="details-age-warning text-label-m">
+              This film is rated {movie.ageRating.code}. You cannot buy tickets for it with this
+              account.
+            </p>
+          )}
+
+          {renderSessions()}
         </section>
 
         <aside className="details-info">

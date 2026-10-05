@@ -129,3 +129,82 @@
   display: flex;
   gap: 7px;
 }
+
+.details-body__main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.details-sessions__header {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.details-sessions__count {
+  color: var(--text-secondary);
+}
+
+.details-days {
+  display: flex;
+  gap: 7px;
+}
+
+.details-day {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 16px;
+  background: var(--bg-card);
+}
+
+.details-day--active {
+  background: var(--color-red);
+}
+
+.details-age-warning {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--tint-red);
+  color: var(--color-red);
+}
+
+.details-status-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.details-venue {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.details-venue__halls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.details-hall {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 15px;
+  border-radius: 18px;
+  background: var(--bg-card);
+}
+
+.details-hall__tickets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  max-width: 424px;
+}
