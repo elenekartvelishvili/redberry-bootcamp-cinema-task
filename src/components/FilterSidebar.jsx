@@ -1,26 +1,11 @@
-import { toDateKey } from '../utils/format';
+import { toDateKey, getNextDays } from '../utils/format';
 import checkedIcon from '../assets/icons/checkbox-checked.svg';
 import './FilterSidebar.css';
 
-
-const getNextDays=()=> {
-
-    const days = [];
-    for(let i=0; i<7; i++) {
-        const day=new Date();
-        day.setDate(day.getDate() + i);
-        days.push(day);
-    }
-    return days;
+const splitLabel = (label) => {
+  const [name, rest] = label.split(' (');
+  return [name, rest ? rest.replace(')', '') : ''];
 };
-
-const splitLabel=(label)=> {
-const [name,rest]=label.split(' (');
-
-return [name,rest ? rest.replace(')','') : ''];
-
-};
-
 
 function CheckRow({ label, hint, checked, onToggle }) {
   return (
@@ -35,8 +20,6 @@ function CheckRow({ label, hint, checked, onToggle }) {
       </span>
     </label>
   );
-
-
 }
 
 function FilterSidebar({ options, venues, formats, languages, times, date, onChange }) {
@@ -68,7 +51,6 @@ function FilterSidebar({ options, venues, formats, languages, times, date, onCha
   const activeCount = venues.length + formats.length + languages.length + times.length;
 
   const clearAll = () => onChange({ venues: [], formats: [], languages: [], times: [] });
-
 
   return (
     <div className="filters">
