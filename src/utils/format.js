@@ -32,3 +32,14 @@ export const formatDate = (dateString) =>
     year: 'numeric',
   });
  
+
+  export const getNextDays=()=> {
+
+    const days = [];
+    for(let i=0; i<7; i++) {
+        const day=new Date();
+        day.setDate(day.getDate() + i);
+        days.push(day);
+    }
+    return days;
+};
