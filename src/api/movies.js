@@ -6,3 +6,6 @@ export const getFeatured = async () => (await request('/movies/featured')).data;
 export const getMovie = async (slug) => (await request(`/movies/${slug}`)).data;
 
 export const notifyMovie=(slug)=> request(`/movies/${slug}/notify`, { method: 'POST' });
+
+export const getMovieSessions = async (slug, date) =>
+  (await request(`/movies/${slug}/sessions`, { params: { date } })).data;

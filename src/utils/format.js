@@ -25,5 +25,10 @@ export const formatDate = (dateString) =>
     return `${year}-${month}-${day}`;
   }  
 
-
+  export const formatLongDate = (dateString) =>
+  new Date(dateString).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
  
