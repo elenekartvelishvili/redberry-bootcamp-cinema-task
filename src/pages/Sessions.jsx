@@ -5,7 +5,8 @@ import { toDateKey } from '../utils/format';
 import { useOptions } from '../context/OptionsContext';
 import FilterSidebar from '../components/FilterSidebar';
 import SessionGroup from '../components/SessionGroup';
-import SortSelect from '../components/sortSelect';
+import SortSelect from '../components/SortSelect';
+import Pagination from '../components/Pagination';
 import './Sessions.css';
 
 function Sessions() {
@@ -73,8 +74,13 @@ function Sessions() {
   }, [searchParams, reloadKey]);
 
   const handleSelectSession = (session) => {
-    // TODO: temporary
+   
     console.log('Selected session', session.id);
+  };
+
+  const handlePageChange = (newPage) => {
+    updateFilters({ page: newPage });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   let countText = '';
@@ -112,16 +118,24 @@ function Sessions() {
     }
 
     return (
-      <div className="sessions__list">
-        {movies.map((group) => (
-          <SessionGroup
-            key={group.movie.id}
-            movie={group.movie}
-            sessions={group.sessions}
-            onSelect={handleSelectSession}
-          />
-        ))}
-      </div>
+      <>
+        <div className="sessions__list">
+          {movies.map((group) => (
+            <SessionGroup
+              key={group.movie.id}
+              movie={group.movie}
+              sessions={group.sessions}
+              onSelect={handleSelectSession}
+            />
+          ))}
+        </div>
+
+        <Pagination
+          currentPage={meta.currentPage}
+          lastPage={meta.lastPage}
+          onChange={handlePageChange}
+        />
+      </>
     );
   };
 
