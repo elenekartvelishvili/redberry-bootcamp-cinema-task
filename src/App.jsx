@@ -7,6 +7,7 @@ import Sessions from './pages/Sessions';
 import Profile from './pages/Profile';
 import LoginModal from './modals/LoginModal';
 import RegisterModal from './modals/RegisterModal';
+import MovieDetails from './pages/MovieDetails';
 
 function App() {
   const { modal } = useAuth();
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/sessions" element={<Sessions />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/movies/:slug" element={<MovieDetails />} />
       </Routes>
 
       <Footer />

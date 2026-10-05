@@ -1,0 +1,131 @@
+.details-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding-left: 60px;
+}
+
+
+.details-hero {
+  position: relative;
+  height: 567px;
+  overflow: hidden;
+}
+
+.details-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(2px);
+  transform: scale(1.05);
+}
+
+.details-hero__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(7, 12, 28, 0.2) 60%, var(--bg-page));
+  backdrop-filter: blur(5px);
+}
+
+.details-hero__content {
+  position: absolute;
+  left: 60px;
+  top: 152px;
+  display: flex;
+  align-items: flex-end;
+  gap: 34px;
+}
+
+.details-hero__poster {
+  width: 289px;
+  height: 374px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 4px 64px rgba(0, 0, 0, 0.2);
+}
+
+.details-hero__info {
+  width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 9px 0;
+}
+
+.details-hero__title {
+  text-transform: uppercase;
+}
+
+.details-hero__text {
+  width: 560px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.details-hero__tags {
+  display: flex;
+  gap: 7px;
+  margin-top: 5px;
+}
+
+
+.details-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 34px 51px 60px;
+}
+
+.details-body__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.details-info {
+  flex-shrink: 0;
+  width: 441px;
+  padding: 0 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.info-row__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.info-row__value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.rating-note {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 9px 13px;
+  border-radius: 12px;
+  background: rgba(226, 126, 4, 0.1);
+  color: var(--color-orange);
+}
+
+.rating-note__row {
+  display: flex;
+  gap: 7px;
+}
