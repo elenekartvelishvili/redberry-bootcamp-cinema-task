@@ -114,6 +114,12 @@ function Sessions() {
       return (
         <div className="sessions__status">
           <p className="text-body-m">Nothing matches these filters. Try removing some.</p>
+          <button
+          className="btn btn--ghost text-button"
+          onClick={()=>updateFilters({venues:[],formats:[],languages:[],times:[]})}
+          >
+            Clear Filters
+          </button>
         </div>
       );
     }
