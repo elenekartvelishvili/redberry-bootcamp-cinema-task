@@ -5,7 +5,7 @@ import { toDateKey } from '../utils/format';
 import { useOptions } from '../context/OptionsContext';
 import FilterSidebar from '../components/FilterSidebar';
 import SessionGroup from '../components/SessionGroup';
-import SortSelect from '../components/SortSelect';
+import SortSelect from '../components/sortSelect';
 import './Sessions.css';
 
 function Sessions() {
