@@ -63,7 +63,7 @@ export function AuthProvider({ children }) {
     try {
       await request('/logout', { method: 'POST' });
     } catch {
-      // even if the server fails, we still log out on our side
+      
     } finally {
       setToken(null);
       setUser(null);
@@ -79,13 +79,15 @@ export function AuthProvider({ children }) {
     [user]
   );
 
+  const openLogin=useCallback(()=>setModal('login'));
+
   const value = {
     user,
     loading,
     isLoggedIn: !!user,
     loadUser, 
     modal,
-    openLogin: () => setModal('login'),
+    openLogin,
     openRegister: () => setModal('register'),
     closeModal,
     login,

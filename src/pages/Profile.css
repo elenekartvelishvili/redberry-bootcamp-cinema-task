@@ -1,0 +1,32 @@
+.profile {
+  padding-left: 51px;
+  padding-right: 51px;
+  padding-bottom: 80px;
+}
+
+.profile__title {
+  margin-bottom: 32px;
+}
+
+.profile__tabs {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--bg-card);
+}
+
+.profile__tab {
+  padding: 0 0 12px;
+  margin-bottom: -1px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.profile__tab--active {
+  color: var(--text-primary);
+  border-bottom-color: var(--color-red);
+}
