@@ -3,6 +3,29 @@ import { useAuth } from '../context/AuthContext';
 import './Profile.css';
 import ProfileForm from '../components/ProfileForm';
 
+
+const getAgeText = (age) => {
+  if (age < 16) return `You are ${age}, so you cannot buy tickets for 16+ or 18+ titles.`;
+  if (age < 18) return `You are ${age}, so you cannot buy tickets for 18+ titles.`;
+  return `You are ${age}, so you can buy tickets for all titles.`;
+};
+
+function ProfileStatus({ user }) {
+  return (
+    <div className="profile__status">
+      {user.profileComplete ? (
+        <p className="profile__banner profile__banner--complete text-label-m">Profile Complete ✓</p>
+      ) : (
+        <p className="profile__banner profile__banner--incomplete text-label-m">
+          Please complete your profile to enable booking.
+        </p>
+      )}
+
+      {user.age !== null && <p className="profile__age text-body-m">{getAgeText(user.age)}</p>}
+    </div>
+  );
+}
+
 function Profile() {
   const { user, loading, openLogin } = useAuth();
   const [tab, setTab] = useState('info');
@@ -41,8 +64,14 @@ function Profile() {
           My Tickets
         </button>
       </div>
-
-            {tab === 'info' ? <ProfileForm /> : <p>Tickets come later</p>}
+      {tab === 'info' ? (
+        <>
+          <ProfileStatus user={user} />
+          <ProfileForm />
+        </>
+      ) : (
+        <p>Tickets come later</p>
+      )}
     </main>
   );
 }
