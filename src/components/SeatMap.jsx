@@ -8,7 +8,14 @@ const LEGEND = [
   { state: 'unavailable', label: 'Unavailable' },
 ];
 
-function SeatMap({ sections }) {
+function SeatMap({ sections, selected, onSeatClick }) {
+  const getSeatClass = (seat) => {
+    const isSelected = selected.some((item) => item.id === seat.id);
+    const stateClass = isSelected ? 'seat--selected' : `seat--${seat.state}`;
+    const aisleClass = seat.aisleAfter ? 'seat--aisle' : '';
+    return `seat ${stateClass} ${aisleClass}`;
+  };
+
   return (
     <div className="seat-map">
       <div className="seat-map__screen text-label-s">Screen</div>
@@ -31,8 +38,9 @@ function SeatMap({ sections }) {
                   <button
                     key={seat.id}
                     type="button"
-                    className={`seat seat--${seat.state} ${seat.aisleAfter ? 'seat--aisle' : ''}`}
+                    className={getSeatClass(seat)}
                     disabled={seat.state !== 'available'}
+                    onClick={() => onSeatClick(seat)}
                   >
                     {seat.label}
                   </button>

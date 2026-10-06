@@ -35,3 +35,19 @@
   align-items: flex-start;
   gap: 16px;
 }
+.booking__body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+}
+
+.booking__map {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking__message {
+  color: var(--color-red);
+  text-align: center;
+}

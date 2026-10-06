@@ -1,0 +1,49 @@
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 24px;
+  border-left: 1px solid var(--bg-card);
+}
+
+.summary__hint {
+  color: var(--text-secondary);
+}
+
+.summary__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+
+.summary__line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+
+.summary__select {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 8px;
+  background: var(--bg-raised);
+  color: var(--text-primary);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.summary__problem {
+  color: var(--color-red);
+}
+
+.summary__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
