@@ -83,6 +83,7 @@ export function AuthProvider({ children }) {
     user,
     loading,
     isLoggedIn: !!user,
+    loadUser, 
     modal,
     openLogin: () => setModal('login'),
     openRegister: () => setModal('register'),
