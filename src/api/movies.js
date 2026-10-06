@@ -1,11 +1,28 @@
 import { request } from './client';
 
-export const getNowPlaying = async () => (await request('/movies/now-playing')).data;
-export const getComingSoon = async () => (await request('/movies/coming-soon')).data;
-export const getFeatured = async () => (await request('/movies/featured')).data;
-export const getMovie = async (slug) => (await request(`/movies/${slug}`)).data;
+export const getNowPlaying = async () => {
+  const response = await request('/movies/now-playing');
+  return response.data;
+};
 
-export const notifyMovie=(slug)=> request(`/movies/${slug}/notify`, { method: 'POST' });
+export const getComingSoon = async () => {
+  const response = await request('/movies/coming-soon');
+  return response.data;
+};
 
-export const getMovieSessions = async (slug, date) =>
-  (await request(`/movies/${slug}/sessions`, { params: { date } })).data;
+export const getFeatured = async () => {
+  const response = await request('/movies/featured');
+  return response.data;
+};
+
+export const getMovie = async (slug) => {
+  const response = await request(`/movies/${slug}`);
+  return response.data;
+};
+
+export const getMovieSessions = async (slug, date) => {
+  const response = await request(`/movies/${slug}/sessions`, { params: { date } });
+  return response.data;
+};
+
+export const notifyMovie = (slug) => request(`/movies/${slug}/notify`, { method: 'POST' });

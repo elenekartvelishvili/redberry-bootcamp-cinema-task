@@ -27,7 +27,7 @@ function ProfileForm() {
   const { user, loadUser } = useAuth();
   const { options } = useOptions();
 
-  const [values, setValues] = useState(() => getStartValues(user));
+  const [values, setValues] = useState(getStartValues(user));
   const [fieldErrors, setFieldErrors] = useState({});
   const [dateFocused, setDateFocused] = useState(false);
   const [saving, setSaving] = useState(false);

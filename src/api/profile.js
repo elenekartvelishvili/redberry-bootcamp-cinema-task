@@ -1,4 +1,3 @@
-import {request} from './client'
+import { request } from './client';
 
-export const updateProfile=(values)=> 
-    request('/profile', {method:"PUT", body: values});
+export const updateProfile = (values) => request('/profile', { method: 'PUT', body: values });
