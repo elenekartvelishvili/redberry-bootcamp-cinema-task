@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useOptions } from '../context/OptionsContext';
-import { getSession, getSessionSeats } from '../api/booking';
+import { getSession, getSessionSeats, holdSeats } from '../api/booking';
 import { isTooYoung } from '../utils/age';
 import Modal from '../components/Modal';
 import SeatMap from '../components/SeatMap';
@@ -23,9 +23,14 @@ function BookingModal({ sessionId, onClose }) {
 
   const [session, setSession] = useState(null);
   const [seatMap, setSeatMap] = useState(null);
+  const [seatsReloadKey, setSeatsReloadKey] = useState(0);
   const [error, setError] = useState('');
+
+  const [step, setStep] = useState('seats');
   const [selected, setSelected] = useState([]);
   const [seatMessage, setSeatMessage] = useState('');
+  const [holding, setHolding] = useState(false);
+  const [hold, setHold] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -57,7 +62,7 @@ function BookingModal({ sessionId, onClose }) {
     return () => {
       ignore = true;
     };
-  }, [sessionId]);
+  }, [sessionId, seatsReloadKey]);
 
   const goToProfile = () => {
     onClose();
@@ -78,18 +83,34 @@ function BookingModal({ sessionId, onClose }) {
       return;
     }
 
-    const adult = options.ticketTypes.find((type) => type.slug === 'adult');
-    setSelected([...selected, { id: seat.id, code: seat.code, ticketTypeId: adult.id }]);
+    setSelected([...selected, { id: seat.id, code: seat.code, ticketType: 'adult' }]);
   };
 
-  const handleTypeChange = (seatId, ticketTypeId) => {
-    setSelected(
-      selected.map((item) => (item.id === seatId ? { ...item, ticketTypeId } : item))
-    );
+  const handleTypeChange = (seatId, ticketType) => {
+    setSelected(selected.map((item) => (item.id === seatId ? { ...item, ticketType } : item)));
   };
 
-  const handleNext = () => {
-    console.log('hold these seats:', selected);
+  const handleNext = async () => {
+    setSeatMessage('');
+    setHolding(true);
+
+    try {
+      const seats = selected.map((item) => ({ seatId: item.id, ticketType: item.ticketType }));
+      const data = await holdSeats(sessionId, seats);
+      setHold(data);
+      setStep('checkout');
+    } catch (err) {
+      if (err.status === 409) {
+        const lostCodes = err.body.contested;
+        setSelected(selected.filter((item) => !lostCodes.includes(item.code)));
+        setSeatMessage(`Sorry, these seats were just taken: ${lostCodes.join(', ')}. Please pick others.`);
+        setSeatsReloadKey(seatsReloadKey + 1);
+      } else {
+        setSeatMessage(err.message);
+      }
+    } finally {
+      setHolding(false);
+    }
   };
 
   const subtitle = session
@@ -102,6 +123,9 @@ function BookingModal({ sessionId, onClose }) {
         session.language.name,
       ].join(' · ')
     : '';
+
+  const stepClass = (name) =>
+    `booking__step text-label-s ${step === name ? 'booking__step--active' : ''}`;
 
   const renderBody = () => {
     if (!user.profileComplete) {
@@ -118,6 +142,14 @@ function BookingModal({ sessionId, onClose }) {
     if (error) return <p className="text-body-m">{error}</p>;
     if (!session || !seatMap || !options) return <p className="text-body-m">Loading...</p>;
 
+    if (step === 'checkout') {
+      return (
+        <p className="text-body-m">
+          Seats held: {hold.seats.map((seat) => seat.code).join(', ')}. Checkout comes tomorrow.
+        </p>
+      );
+    }
+
     return (
       <div className="booking__body">
         <div className="booking__map">
@@ -132,6 +164,7 @@ function BookingModal({ sessionId, onClose }) {
           movie={session.movie}
           tooYoung={isTooYoung(user, session.movie.ageRating.minAge)}
           maxSeats={options.maxSeatsPerOrder}
+          holding={holding}
           onTypeChange={handleTypeChange}
           onNext={handleNext}
         />
@@ -147,8 +180,8 @@ function BookingModal({ sessionId, onClose }) {
       className="modal--booking"
     >
       <div className="booking__steps">
-        <span className="booking__step booking__step--active text-label-s">Seats</span>
-        <span className="booking__step text-label-s">Checkout</span>
+        <span className={stepClass('seats')}>Seats</span>
+        <span className={stepClass('checkout')}>Checkout</span>
       </div>
 
       {renderBody()}
