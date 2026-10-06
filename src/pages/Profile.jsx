@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import './Profile.css';
+import ProfileForm from '../components/ProfileForm';
 
 function Profile() {
   const { user, loading, openLogin } = useAuth();
@@ -41,7 +42,7 @@ function Profile() {
         </button>
       </div>
 
-      {tab === 'info' ? <p>Form comes next</p> : <p>Tickets come later</p>}
+            {tab === 'info' ? <ProfileForm /> : <p>Tickets come later</p>}
     </main>
   );
 }

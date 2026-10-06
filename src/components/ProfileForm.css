@@ -1,0 +1,32 @@
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 880px;
+}
+
+.profile-form__hint {
+  margin-top: 8px;
+  color: var(--text-secondary);
+}
+
+.profile-form .field__input:disabled {
+  color: var(--text-secondary);
+}
+
+.profile-form input[type='date'] {
+  color-scheme: dark;
+}
+
+.profile-form select {
+  cursor: pointer;
+}
+
+.profile-form option {
+  background: var(--bg-card);
+}
+
+.profile-form__save {
+  align-self: flex-start;
+  margin-top: 16px;
+}
