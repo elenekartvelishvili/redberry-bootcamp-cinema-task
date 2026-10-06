@@ -27,7 +27,7 @@ const name=value.trim();
 if(!name) return 'Name is required';
 if(name.length<3) return 'Name must be at least 3 characters';
 if(name.length>50) return 'Name must not exceed 50 characters';
-return ' ';
+return '';
 
 };
 

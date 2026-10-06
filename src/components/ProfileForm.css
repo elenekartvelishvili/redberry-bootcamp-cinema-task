@@ -19,11 +19,19 @@
 }
 
 .profile-form select {
+  appearance: none;
+  border: none;
+  outline: none;
   cursor: pointer;
 }
 
 .profile-form option {
   background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.profile-form__empty {
+  color: var(--text-secondary);
 }
 
 .profile-form__save {

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useOptions } from '../context/OptionsContext';
+import { updateProfile } from '../api/profile';
 import FormField from './FormField';
 import { validateFullName, validateMobile, validateDateOfBirth } from '../utils/validators';
+import chevronIcon from '../assets/icons/chevron-down.svg';
 import './ProfileForm.css';
 
 const FIELD_NAMES = ['fullName', 'mobileNumber', 'dateOfBirth'];
@@ -20,12 +22,16 @@ const getStartValues = (user) => ({
   dateOfBirth: user.dateOfBirth ?? '',
   preferredVenueId: user.preferredVenue ? String(user.preferredVenue.id) : '',
 });
+
 function ProfileForm() {
-  const { user } = useAuth();
+  const { user, loadUser } = useAuth();
   const { options } = useOptions();
 
   const [values, setValues] = useState(() => getStartValues(user));
   const [fieldErrors, setFieldErrors] = useState({});
+  const [dateFocused, setDateFocused] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   const startValues = getStartValues(user);
   const isChanged = Object.keys(values).some((key) => values[key] !== startValues[key]);
@@ -54,10 +60,36 @@ function ProfileForm() {
     error: fieldErrors[name],
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('will save:', values);
-  };  return (
+    if (!isChanged || !isValid) return;
+
+    setError('');
+    setSaving(true);
+    try {
+      await updateProfile({
+        fullName: values.fullName.trim(),
+        mobileNumber: values.mobileNumber.replaceAll(' ', ''),
+        dateOfBirth: values.dateOfBirth,
+        preferredVenueId: values.preferredVenueId ? Number(values.preferredVenueId) : null,
+      });
+      await loadUser();
+    } catch (err) {
+      if (err.errors) {
+        const apiErrors = {};
+        for (const [key, messages] of Object.entries(err.errors)) {
+          apiErrors[key] = messages[0];
+        }
+        setFieldErrors((prev) => ({ ...prev, ...apiErrors }));
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
     <form className="profile-form" onSubmit={handleSubmit} noValidate>
       <FormField label="Full name" type="text" placeholder="Your full name" {...fieldProps('fullName')} />
 
@@ -68,33 +100,46 @@ function ProfileForm() {
 
       <FormField label="Mobile number" type="tel" placeholder="5XX XXX XXX" {...fieldProps('mobileNumber')} />
 
-      <FormField label="Date of birth" type="date" {...fieldProps('dateOfBirth')} />
+      <FormField
+        label="Date of birth"
+        type={dateFocused || values.dateOfBirth ? 'date' : 'text'}
+        placeholder="e.g. Text"
+        {...fieldProps('dateOfBirth')}
+        onFocus={() => setDateFocused(true)}
+        onBlur={(e) => {
+          setDateFocused(false);
+          handleBlur(e);
+        }}
+      />
 
       <label className="field">
         <span className="field__label text-label-s">Preferred Venue (Optional)</span>
         <span className="field__box">
           <select
-            className="field__input text-label-s"
+            className={`field__input text-label-s ${values.preferredVenueId ? '' : 'profile-form__empty'}`}
             name="preferredVenueId"
             value={values.preferredVenueId}
             onChange={handleChange}
           >
-            <option value="">No preference</option>
+            <option value="">e.g. Text</option>
             {options?.venues.map((venue) => (
               <option key={venue.id} value={venue.id}>
                 {venue.name}
               </option>
             ))}
           </select>
+          <img src={chevronIcon} alt="" width="16" height="16" />
         </span>
       </label>
+
+      {error && <p className="field__error text-label-s">{error}</p>}
 
       <button
         type="submit"
         className="btn btn--red text-button profile-form__save"
-        disabled={!isChanged || !isValid}
+        disabled={!isChanged || !isValid || saving}
       >
-        Save changes
+        {saving ? 'Saving...' : 'Save changes'}
       </button>
     </form>
   );
