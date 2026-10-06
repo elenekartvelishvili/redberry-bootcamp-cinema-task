@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 import { getMovie, getMovieSessions } from '../api/movies';
 import { formatLongDate, toDateKey, getNextDays } from '../utils/format';
 import { useAuth } from '../context/AuthContext';
-import SessionTicket from '../components/SessionTicket';
-import timerIcon from '../assets/icons/timer.svg';
 import { addRecentlyViewed } from '../utils/recentlyViewed';
+import SessionTicket from '../components/SessionTicket';
+import BookingModal from '../modals/BookingModal';
+import timerIcon from '../assets/icons/timer.svg';
 import './MovieDetails.css';
 
 function InfoRow({ label, value }) {
@@ -16,7 +17,6 @@ function InfoRow({ label, value }) {
     </div>
   );
 }
-
 
 const groupByHall = (sessions) => {
   const halls = {};
@@ -30,20 +30,20 @@ const groupByHall = (sessions) => {
 
 function MovieDetails() {
   const { slug } = useParams();
-  const { user } = useAuth(); 
-
+  const { user, requireAuth } = useAuth();
 
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [reloadKey, setReloadKey] = useState(0);
 
-
   const [date, setDate] = useState(toDateKey(new Date()));
   const [venues, setVenues] = useState([]);
   const [sessionsLoading, setSessionsLoading] = useState(true);
   const [sessionsError, setSessionsError] = useState('');
   const [sessionsReloadKey, setSessionsReloadKey] = useState(0);
+
+  const [bookingSessionId, setBookingSessionId] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -67,7 +67,6 @@ function MovieDetails() {
     };
   }, [slug, reloadKey]);
 
-
   useEffect(() => {
     let ignore = false;
 
@@ -90,14 +89,13 @@ function MovieDetails() {
     };
   }, [slug, date, sessionsReloadKey]);
 
-  const handleSelectSession = (session) => {
-    // TODO: temporary, replace with the booking modal on Tuesday
-    console.log('Selected session', session.id);
-  };
-
   useEffect(() => {
     if (movie) addRecentlyViewed(movie);
   }, [movie]);
+
+  const handleSelectSession = (session) => {
+    requireAuth(() => setBookingSessionId(session.id));
+  };
 
   if (loading) {
     return (
@@ -106,7 +104,6 @@ function MovieDetails() {
       </main>
     );
   }
-    
 
   if (error) {
     return (
@@ -122,10 +119,8 @@ function MovieDetails() {
   const formatNames = movie.formats.map((format) => format.name).join(', ');
   const genreNames = movie.genres.map((genre) => genre.name).join(', ');
 
-
   const minAge = movie.ageRating.minAge;
   const tooYoung = user && user.age !== null && minAge >= 16 && user.age < minAge;
-
 
   let sessionCount = 0;
   venues.forEach((venue) => {
@@ -220,7 +215,6 @@ function MovieDetails() {
       </section>
 
       <div className="details-body">
-      
         <section className="details-body__main">
           <div className="details-sessions__header">
             <h2 className="text-h2">Sessions</h2>
@@ -281,6 +275,10 @@ function MovieDetails() {
           </div>
         </aside>
       </div>
+
+      {bookingSessionId && (
+        <BookingModal sessionId={bookingSessionId} onClose={() => setBookingSessionId(null)} />
+      )}
     </main>
   );
 }

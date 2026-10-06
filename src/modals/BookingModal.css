@@ -1,0 +1,37 @@
+.modal--booking {
+  width: 1140px;
+  max-width: calc(100vw - 40px);
+}
+
+.modal--booking .modal__titles h2 {
+  text-transform: uppercase;
+}
+
+.booking__steps {
+  display: flex;
+  max-width: 680px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--bg-card);
+}
+
+.booking__step {
+  flex: 1;
+  padding: 10px;
+  border-radius: 999px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.booking__step--active {
+  background: var(--color-red);
+  color: var(--text-primary);
+}
+
+.booking__notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}

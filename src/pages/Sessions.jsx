@@ -3,16 +3,20 @@ import { useSearchParams } from 'react-router-dom';
 import { getSessions } from '../api/sessions';
 import { toDateKey } from '../utils/format';
 import { useOptions } from '../context/OptionsContext';
+import { useAuth } from '../context/AuthContext';
 import FilterSidebar from '../components/FilterSidebar';
 import SessionGroup from '../components/SessionGroup';
 import SortSelect from '../components/SortSelect';
 import Pagination from '../components/Pagination';
 import SessionsSkeleton from '../components/SessionsSkeleton';
+import BookingModal from '../modals/BookingModal';
 import './Sessions.css';
 
 function Sessions() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { options } = useOptions();
+  const { requireAuth } = useAuth();
+  const [bookingSessionId, setBookingSessionId] = useState(null);
 
   const readList = (name) => {
     const value = searchParams.get(name);
@@ -71,12 +75,10 @@ function Sessions() {
     return () => {
       ignore = true;
     };
-   
   }, [searchParams, reloadKey]);
 
   const handleSelectSession = (session) => {
-   
-    console.log('Selected session', session.id);
+    requireAuth(() => setBookingSessionId(session.id));
   };
 
   const handlePageChange = (newPage) => {
@@ -86,24 +88,20 @@ function Sessions() {
 
   let countText = '';
   if (!loading && !error) {
-    countText = meta.totalSessions > 0
-      ? `Showing ${meta.totalSessions} sessions`
-      : 'No sessions found';
+    countText =
+      meta.totalSessions > 0 ? `Showing ${meta.totalSessions} sessions` : 'No sessions found';
   }
 
   const renderList = () => {
     if (loading) {
-      return<SessionsSkeleton />;
+      return <SessionsSkeleton />;
     }
 
     if (error) {
       return (
         <div className="sessions__status">
           <p className="text-body-m">{error}</p>
-          <button
-            className="btn btn--ghost text-button"
-            onClick={() => setReloadKey(reloadKey + 1)}
-          >
+          <button className="btn btn--ghost text-button" onClick={() => setReloadKey(reloadKey + 1)}>
             Try again
           </button>
         </div>
@@ -115,8 +113,8 @@ function Sessions() {
         <div className="sessions__status">
           <p className="text-body-m">Nothing matches these filters. Try removing some.</p>
           <button
-          className="btn btn--ghost text-button"
-          onClick={()=>updateFilters({venues:[],formats:[],languages:[],times:[]})}
+            className="btn btn--ghost text-button"
+            onClick={() => updateFilters({ venues: [], formats: [], languages: [], times: [] })}
           >
             Clear Filters
           </button>
@@ -177,9 +175,12 @@ function Sessions() {
           )}
         </div>
 
-
         {renderList()}
       </section>
+
+      {bookingSessionId && (
+        <BookingModal sessionId={bookingSessionId} onClose={() => setBookingSessionId(null)} />
+      )}
     </main>
   );
 }
