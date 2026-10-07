@@ -1,0 +1,9 @@
+.modal--refund {
+  width: 440px;
+}
+
+.refund__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
