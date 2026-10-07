@@ -74,7 +74,7 @@ function Sessions() {
 
     return () => {
       ignore = true;
-    };
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, reloadKey]);
 
   const handleSelectSession = (session) => {
