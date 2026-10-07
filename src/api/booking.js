@@ -17,3 +17,8 @@ export const holdSeats = async (sessionId, seats) => {
   });
   return response.data;
 };
+
+export const createOrder = async (details) => {
+  const response = await request('/orders', { method: 'POST', body: details });
+  return response.data;
+};
