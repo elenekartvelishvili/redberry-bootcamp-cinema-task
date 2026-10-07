@@ -7,6 +7,9 @@ import { isTooYoung } from '../utils/age';
 import Modal from '../components/Modal';
 import SeatMap from '../components/SeatMap';
 import BookingSummary from '../components/BookingSummary';
+import HoldTimer from '../components/HoldTimer';
+import CheckoutForm from '../components/CheckoutForm';
+import BookingConfirmation from '../components/BookingConfirmation';
 import './BookingModal.css';
 
 const formatSessionDate = (dateString) =>
@@ -31,6 +34,7 @@ function BookingModal({ sessionId, onClose }) {
   const [seatMessage, setSeatMessage] = useState('');
   const [holding, setHolding] = useState(false);
   const [hold, setHold] = useState(null);
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -69,6 +73,11 @@ function BookingModal({ sessionId, onClose }) {
     navigate('/profile');
   };
 
+  const goToMyTickets = () => {
+    onClose();
+    navigate('/profile?tab=tickets');
+  };
+
   const handleSeatClick = (seat) => {
     setSeatMessage('');
 
@@ -90,6 +99,22 @@ function BookingModal({ sessionId, onClose }) {
     setSelected(selected.map((item) => (item.id === seatId ? { ...item, ticketType } : item)));
   };
 
+  const handleSeatsTaken = (lostCodes) => {
+    setHold(null);
+    setStep('seats');
+    setSelected(selected.filter((item) => !lostCodes.includes(item.code)));
+    setSeatMessage(`Sorry, these seats were just taken: ${lostCodes.join(', ')}. Please pick others.`);
+    setSeatsReloadKey(seatsReloadKey + 1);
+  };
+
+  const handleExpire = () => {
+    setHold(null);
+    setStep('seats');
+    setSelected([]);
+    setSeatMessage('Your hold time expired. Please re-select your seats.');
+    setSeatsReloadKey(seatsReloadKey + 1);
+  };
+
   const handleNext = async () => {
     setSeatMessage('');
     setHolding(true);
@@ -101,16 +126,23 @@ function BookingModal({ sessionId, onClose }) {
       setStep('checkout');
     } catch (err) {
       if (err.status === 409) {
-        const lostCodes = err.body.contested;
-        setSelected(selected.filter((item) => !lostCodes.includes(item.code)));
-        setSeatMessage(`Sorry, these seats were just taken: ${lostCodes.join(', ')}. Please pick others.`);
-        setSeatsReloadKey(seatsReloadKey + 1);
+        handleSeatsTaken(err.body.contested);
       } else {
         setSeatMessage(err.message);
       }
     } finally {
       setHolding(false);
     }
+  };
+
+  const handleBack = () => {
+    setStep('seats');
+  };
+
+  const handlePaid = (newOrder) => {
+    setOrder(newOrder);
+    setHold(null);
+    setStep('done');
   };
 
   const subtitle = session
@@ -142,11 +174,19 @@ function BookingModal({ sessionId, onClose }) {
     if (error) return <p className="text-body-m">{error}</p>;
     if (!session || !seatMap || !options) return <p className="text-body-m">Loading...</p>;
 
+    if (step === 'done') {
+      return <BookingConfirmation order={order} onMyTickets={goToMyTickets} onClose={onClose} />;
+    }
+
     if (step === 'checkout') {
       return (
-        <p className="text-body-m">
-          Seats held: {hold.seats.map((seat) => seat.code).join(', ')}. Checkout comes tomorrow.
-        </p>
+        <CheckoutForm
+          hold={hold}
+          onPaid={handlePaid}
+          onExpired={handleExpire}
+          onSeatsTaken={handleSeatsTaken}
+          onBack={handleBack}
+        />
       );
     }
 
@@ -176,13 +216,18 @@ function BookingModal({ sessionId, onClose }) {
     <Modal
       title={session ? session.movie.title : 'Loading...'}
       subtitle={subtitle}
+      headerExtra={
+        step === 'checkout' && hold && <HoldTimer expiresAt={hold.expiresAt} onExpire={handleExpire} />
+      }
       onClose={onClose}
       className="modal--booking"
     >
-      <div className="booking__steps">
-        <span className={stepClass('seats')}>Seats</span>
-        <span className={stepClass('checkout')}>Checkout</span>
-      </div>
+      {step !== 'done' && (
+        <div className="booking__steps">
+          <span className={stepClass('seats')}>Seats</span>
+          <span className={stepClass('checkout')}>Checkout</span>
+        </div>
+      )}
 
       {renderBody()}
     </Modal>

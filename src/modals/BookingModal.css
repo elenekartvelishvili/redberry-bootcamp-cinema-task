@@ -51,3 +51,18 @@
   color: var(--color-red);
   text-align: center;
 }
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 560px;
+}
+
+.confirmation__details {
+  color: var(--text-secondary);
+}
+
+.confirmation__actions {
+  display: flex;
+  gap: 12px;
+}
