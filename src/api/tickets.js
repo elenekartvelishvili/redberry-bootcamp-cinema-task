@@ -1,5 +1,11 @@
 import { request } from './client';
 
-export const getTickets = () => request('/tickets');
+export const getTickets = async () => {
+  const response = await request('/tickets');
+  return response.data;
+};
 
-export const refundOrder = (orderId) => request(`/orders/${orderId}/refund`, { method: 'POST' });
+export const refundOrder = async (reference) => {
+  const response = await request(`/orders/${reference}/refund`, { method: 'POST' });
+  return response.data;
+};

@@ -58,3 +58,17 @@
 .profile__age {
   color: var(--text-secondary);
 }
+
+.profile__tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile__count {
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--color-red);
+  color: var(--text-primary);
+  font-size: 11px;
+}

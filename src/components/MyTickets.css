@@ -1,0 +1,48 @@
+.my-tickets {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.my-tickets__pills {
+  display: flex;
+  align-self: flex-start;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+
+.my-tickets__pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.my-tickets__pill--active {
+  background: var(--bg-raised);
+  color: var(--text-primary);
+}
+
+.my-tickets__count {
+  color: var(--text-secondary);
+}
+
+.my-tickets__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.my-tickets__status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}

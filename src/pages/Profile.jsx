@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './Profile.css';
+import { getTickets } from '../api/tickets';
 import ProfileForm from '../components/ProfileForm';
-
+import MyTickets from '../components/MyTickets';
+import './Profile.css';
 
 const getAgeText = (age) => {
   if (age < 16) return `You are ${age}, so you cannot buy tickets for 16+ or 18+ titles.`;
@@ -28,11 +30,44 @@ function ProfileStatus({ user }) {
 
 function Profile() {
   const { user, loading, openLogin } = useAuth();
-  const [tab, setTab] = useState('info');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get('tab') || 'info';
+
+  const [tickets, setTickets] = useState([]);
+  const [ticketsLoading, setTicketsLoading] = useState(true);
+  const [ticketsError, setTicketsError] = useState('');
+  const [ticketsReloadKey, setTicketsReloadKey] = useState(0);
 
   useEffect(() => {
     if (!loading && !user) openLogin();
   }, [loading, user, openLogin]);
+
+  useEffect(() => {
+    if (!user) return;
+    let ignore = false;
+
+    setTicketsLoading(true);
+    setTicketsError('');
+
+    getTickets()
+      .then((data) => {
+        if (!ignore) setTickets(data);
+      })
+      .catch((err) => {
+        if (!ignore) setTicketsError(err.message);
+      })
+      .finally(() => {
+        if (!ignore) setTicketsLoading(false);
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [user, ticketsReloadKey]);
+
+  const handleRefunded = (updatedOrder) => {
+    setTickets(tickets.map((order) => (order.id === updatedOrder.id ? updatedOrder : order)));
+  };
 
   if (loading) {
     return (
@@ -50,6 +85,10 @@ function Profile() {
     );
   }
 
+  const upcomingCount = tickets.filter(
+    (order) => order.isUpcoming && order.status !== 'refunded'
+  ).length;
+
   const tabClass = (name) => `profile__tab text-label-m ${tab === name ? 'profile__tab--active' : ''}`;
 
   return (
@@ -57,20 +96,32 @@ function Profile() {
       <h1 className="profile__title text-h1">My Profile</h1>
 
       <div className="profile__tabs">
-        <button type="button" className={tabClass('info')} onClick={() => setTab('info')}>
+        <button type="button" className={tabClass('info')} onClick={() => setSearchParams({ tab: 'info' })}>
           Personal Information
         </button>
-        <button type="button" className={tabClass('tickets')} onClick={() => setTab('tickets')}>
+        <button
+          type="button"
+          className={tabClass('tickets')}
+          onClick={() => setSearchParams({ tab: 'tickets' })}
+        >
           My Tickets
+          {upcomingCount > 0 && <span className="profile__count">{upcomingCount}</span>}
         </button>
       </div>
+
       {tab === 'info' ? (
         <>
           <ProfileStatus user={user} />
           <ProfileForm />
         </>
       ) : (
-        <p>Tickets come later</p>
+        <MyTickets
+          tickets={tickets}
+          loading={ticketsLoading}
+          error={ticketsError}
+          onRetry={() => setTicketsReloadKey(ticketsReloadKey + 1)}
+          onRefunded={handleRefunded}
+        />
       )}
     </main>
   );

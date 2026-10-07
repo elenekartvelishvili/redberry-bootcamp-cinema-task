@@ -1,0 +1,78 @@
+.ticket-card {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  border-radius: 20px;
+  background: var(--bg-card);
+}
+
+.ticket-card__main {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+}
+
+.ticket-card__poster {
+  width: 60px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.ticket-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+}
+
+.ticket-card__details {
+  display: flex;
+  gap: 48px;
+}
+
+.ticket-card__details div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ticket-card__label {
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.ticket-card__muted {
+  color: var(--text-secondary);
+}
+
+.ticket-card__seats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticket-card__seat {
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--bg-raised);
+}
+
+.ticket-card__side {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-left: 1px dashed var(--bg-raised);
+}
+
+.ticket-card__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
