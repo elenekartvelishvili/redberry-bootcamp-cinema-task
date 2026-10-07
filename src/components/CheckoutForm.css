@@ -1,0 +1,16 @@
+.checkout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+}
+
+.checkout__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkout__row {
+  display: flex;
+  gap: 16px;
+}
