@@ -1,0 +1,10 @@
+.hold-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  text-transform: uppercase;
+}
