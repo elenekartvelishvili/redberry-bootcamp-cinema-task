@@ -63,7 +63,7 @@ export function AuthProvider({ children }) {
     try {
       await request('/logout', { method: 'POST' });
     } catch {
-      
+      //this is done on purpose so if my backend fails, i log out on my side.
     } finally {
       setToken(null);
       setUser(null);
@@ -79,7 +79,7 @@ export function AuthProvider({ children }) {
     [user]
   );
 
-  const openLogin=useCallback(()=>setModal('login'));
+  const openLogin=useCallback(()=>setModal('login'),[]);
 
   const value = {
     user,
