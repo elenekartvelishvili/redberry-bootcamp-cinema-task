@@ -67,3 +67,32 @@ export const validateDateOfBirth = (value) => {
   if (getAge(value) < 12) return 'You must be at least 12 years old to create an account';
   return '';
 };
+
+export const validateCardNumber = (value) => {
+  const digits = value.replaceAll(' ', '');
+  if (!digits) return 'Card number is required';
+  if (!/^\d{16}$/.test(digits)) return 'Card number must be 16 digits';
+  return '';
+};
+
+export const validateExpiry = (value) => {
+  if (!value) return 'Expiry date is required';
+  if (!/^\d{2}\/\d{2}$/.test(value)) return 'Use the MM/YY format';
+
+  const month = Number(value.slice(0, 2));
+  const year = 2000 + Number(value.slice(3, 5));
+  if (month < 1 || month > 12) return 'Month must be between 01 and 12';
+
+  const today = new Date();
+  const thisYear = today.getFullYear();
+  const thisMonth = today.getMonth() + 1;
+  if (year < thisYear || (year === thisYear && month < thisMonth)) return 'Card has expired';
+
+  return '';
+};
+
+export const validateCvv = (value) => {
+  if (!value) return 'CVV is required';
+  if (!/^\d{3}$/.test(value)) return 'CVV must be 3 digits';
+  return '';
+};
