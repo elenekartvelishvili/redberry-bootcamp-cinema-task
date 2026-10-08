@@ -26,3 +26,8 @@ export const getMovieSessions = async (slug, date) => {
 };
 
 export const notifyMovie = (slug) => request(`/movies/${slug}/notify`, { method: 'POST' });
+
+export const searchMovies = async (query) => {
+  const response = await request('/search', { params: { q: query } });
+  return response.data;
+};
