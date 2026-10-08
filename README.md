@@ -3,7 +3,6 @@
 A cinema ticket booking app for the Kino XII cinema network, built as the assignment for **Redberry Bootcamp XII**.
 
 🔗 **Live:** https://redberry-bootcamp-cinema-task.vercel.app
-📦 **Repository:** https://github.com/elenekartvelishvili/redberry-bootcamp-cinema-task
 
 ---
 
