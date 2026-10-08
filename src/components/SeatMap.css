@@ -73,8 +73,8 @@
   color: var(--text-disabled);
 }
 
-.seat--unavailable {
-  opacity: 0.3;
+.seat--empty {
+  visibility: hidden;
 }
 
 .seat-map__legend {

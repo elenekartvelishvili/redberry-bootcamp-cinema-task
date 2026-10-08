@@ -5,7 +5,6 @@ const LEGEND = [
   { state: 'selected', label: 'Selected' },
   { state: 'sold', label: 'Sold' },
   { state: 'held', label: 'Held by another user' },
-  { state: 'unavailable', label: 'Unavailable' },
 ];
 
 function SeatMap({ sections, selected, onSeatClick }) {
@@ -34,17 +33,24 @@ function SeatMap({ sections, selected, onSeatClick }) {
               <div key={row.label} className="seat-map__row">
                 <span className="seat-map__row-label text-label-s">{row.label}</span>
 
-                {row.seats.map((seat) => (
-                  <button
-                    key={seat.id}
-                    type="button"
-                    className={getSeatClass(seat)}
-                    disabled={seat.state !== 'available'}
-                    onClick={() => onSeatClick(seat)}
-                  >
-                    {seat.label}
-                  </button>
-                ))}
+                {row.seats.map((seat) =>
+                  seat.state === 'unavailable' ? (
+                    <span
+                      key={seat.id}
+                      className={`seat seat--empty ${seat.aisleAfter ? 'seat--aisle' : ''}`}
+                    />
+                  ) : (
+                    <button
+                      key={seat.id}
+                      type="button"
+                      className={getSeatClass(seat)}
+                      disabled={seat.state !== 'available'}
+                      onClick={() => onSeatClick(seat)}
+                    >
+                      {seat.label}
+                    </button>
+                  )
+                )}
               </div>
             ))}
           </div>
