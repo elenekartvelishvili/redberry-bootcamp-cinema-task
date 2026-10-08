@@ -134,7 +134,63 @@
   text-align: left;
 }
 
-.navbar__menu a:hover,
-.navbar__menu button:hover {
-  background: var(--bg-raised);
+.navbar__menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 300px;
+  padding: 20px;
+  border: 1px solid var(--bg-raised);
+  border-radius: 20px;
+  background: var(--bg-page);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar__menu-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.navbar__muted {
+  color: var(--text-secondary);
+}
+
+.navbar__status {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.navbar__status--incomplete {
+  background: rgba(245, 165, 36, 0.1);
+  color: var(--color-warning);
+}
+
+.navbar__status--complete {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-success);
+}
+
+.navbar__menu-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.navbar__menu-link:hover {
+  color: var(--text-secondary);
+}
+
+.navbar__logout {
+  margin-top: 8px;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--bg-card);
+  color: var(--color-red);
+  text-align: left;
 }
