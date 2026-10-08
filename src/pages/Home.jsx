@@ -1,14 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getNowPlaying, getComingSoon } from '../api/movies';
+import { getRecentlyViewed } from '../utils/recentlyViewed';
 import Hero from '../components/Hero';
 import MovieCard from '../components/MovieCard';
 import ComingSoonCard from '../components/ComingSoonCard';
-import { useAuth } from '../context/AuthContext';
-import { getRecentlyViewed } from '../utils/recentlyViewed';
 import RecentCard from '../components/RecentCard';
-
-
 import './Home.css';
 
 function Home() {
@@ -16,7 +13,6 @@ function Home() {
   const [comingSoon, setComingSoon] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { isLoggedIn } = useAuth();
   const recentMovies = getRecentlyViewed();
 
   const load = useCallback(async () => {
@@ -37,7 +33,7 @@ function Home() {
     load();
   }, [load]);
 
-   return (
+  return (
     <main>
       <Hero />
 
@@ -53,7 +49,7 @@ function Home() {
           </div>
         ) : (
           <>
-              {isLoggedIn && recentMovies.length > 0 && (
+            {recentMovies.length > 0 && (
               <>
                 <section className="home-section">
                   <h2 className="text-h1">Recently viewed</h2>
@@ -67,6 +63,7 @@ function Home() {
                 <hr className="home__divider" />
               </>
             )}
+
             <section className="home-section">
               <div className="home-section__header">
                 <h2 className="text-h1">NOW PLAYING</h2>
