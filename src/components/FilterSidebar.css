@@ -86,8 +86,8 @@
 }
 
 .day-btn {
-  flex:1;
-  max-width: 0;
+  flex-shrink: 0;
+  width: 37px;
   height: 54px;
   display: flex;
   flex-direction: column;
