@@ -27,6 +27,7 @@ function BookingModal({ sessionId, onClose }) {
   const [session, setSession] = useState(null);
   const [seatMap, setSeatMap] = useState(null);
   const [seatsReloadKey, setSeatsReloadKey] = useState(0);
+  const [retryKey, setRetryKey] = useState(0);
   const [error, setError] = useState('');
 
   const [step, setStep] = useState('seats');
@@ -50,7 +51,7 @@ function BookingModal({ sessionId, onClose }) {
     return () => {
       ignore = true;
     };
-  }, [sessionId]);
+  }, [sessionId, retryKey]);
 
   useEffect(() => {
     let ignore = false;
@@ -66,7 +67,12 @@ function BookingModal({ sessionId, onClose }) {
     return () => {
       ignore = true;
     };
-  }, [sessionId, seatsReloadKey]);
+  }, [sessionId, seatsReloadKey, retryKey]);
+
+  const handleRetry = () => {
+    setError('');
+    setRetryKey(retryKey + 1);
+  };
 
   const goToProfile = () => {
     onClose();
@@ -171,7 +177,17 @@ function BookingModal({ sessionId, onClose }) {
       );
     }
 
-    if (error) return <p className="text-body-m">{error}</p>;
+    if (error) {
+      return (
+        <div className="booking__notice">
+          <p className="text-body-m">{error}</p>
+          <button type="button" className="btn btn--ghost text-button" onClick={handleRetry}>
+            Try again
+          </button>
+        </div>
+      );
+    }
+
     if (!session || !seatMap || !options) return <p className="text-body-m">Loading...</p>;
 
     if (step === 'done') {
