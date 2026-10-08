@@ -36,7 +36,7 @@ function SessionCard({ session, onSelect }) {
               {session.seatsLeft} left
             </span>
           )}
-          <span className="text-button">₾{session.price}</span>
+          <span className="text-button">from ₾{session.price}</span>
         </div>
       </div>
     </button>
