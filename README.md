@@ -171,4 +171,4 @@ src/
 
 ---
 
-Made by **Elene Kartvelishvili** for Redberry Bootcamp XII.
+Made for Redberry Bootcamp XII.
