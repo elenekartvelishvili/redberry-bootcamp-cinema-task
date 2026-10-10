@@ -1,5 +1,5 @@
 
-const BASE_URL = 'https://api.kinoxii.redberryinternship.ge/api';
+const BASE_URL = import.meta.env.VITE_API_URL;
 const TOKEN_KEY = 'cinema-token';
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
