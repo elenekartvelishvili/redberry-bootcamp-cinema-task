@@ -39,8 +39,27 @@ function CheckoutForm({ hold, onPaid, onExpired, onSeatsTaken, onBack }) {
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState('');
 
+  const formatValue = (name, value) => {
+    if (name === 'cvv') {
+      return value.replace(/\D/g, '').slice(0, 3);
+    }
+
+    if (name === 'expiry') {
+      const digits = value.replace(/\D/g, '').slice(0, 4);
+      return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+    }
+
+    if (name === 'cardNumber') {
+      const digits = value.replace(/\D/g, '').slice(0, 16);
+      return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+    }
+
+    return value;
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    const value = formatValue(name, e.target.value);
     const next = { ...values, [name]: value };
     setValues(next);
 
@@ -113,8 +132,8 @@ function CheckoutForm({ hold, onPaid, onExpired, onSeatsTaken, onBack }) {
           {...fieldProps('cardNumber')}
         />
         <div className="checkout__row">
-          <FormField label="Expiry" type="text" placeholder="MM/YY" {...fieldProps('expiry')} />
-          <FormField label="CVV" type="password" placeholder="123" maxLength={3} {...fieldProps('cvv')} />
+          <FormField label="Expiry" type="text" inputMode='numeric' placeholder="MM/YY" {...fieldProps('expiry')} />
+          <FormField label="CVV" type="password" inputMode='numeric' placeholder="123" maxLength={3} {...fieldProps('cvv')} />
         </div>
       </div>
 
