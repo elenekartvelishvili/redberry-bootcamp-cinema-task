@@ -10,17 +10,23 @@ function MovieCard({ movie }) {
     <Link to={`/movies/${movie.slug}`} className="movie-card">
       <img src={movie.posterUrl} alt={movie.title} className="movie-card__poster" />
 
-      <div className="movie-card__info">
-        <h3 className="movie-card__title text-h3">{movie.title}</h3>
-        <p className="movie-card__meta text-body-s">{meta}</p>
-        <span className="badge badge--red badge--small text-label-s">
-          {movie.ageRating.code}
-        </span>
-      </div>
+      <div className="movie-card__body">
+        <div className="movie-card__info">
+          <h3 className="movie-card__title text-h3">{movie.title}</h3>
+          <p className="movie-card__meta text-body-s">{meta}</p>
+          <span className="badge badge--red badge--small text-label-s">
+            {movie.ageRating.code}
+          </span>
+        </div>
 
-      <div className="movie-card__footer">
-        <span className="text-label-s">From ₾ {movie.fromPrice}</span>
-        <span className="btn btn--red btn--small text-button">Buy Ticket</span>
+        {movie.synopsis && (
+          <p className="movie-card__synopsis text-body-s">{movie.synopsis}</p>
+        )}
+
+        <div className="movie-card__footer">
+          <span className="text-label-s">From ₾ {movie.fromPrice}</span>
+          <span className="btn btn--red btn--small text-button">Buy Ticket</span>
+        </div>
       </div>
     </Link>
   );
