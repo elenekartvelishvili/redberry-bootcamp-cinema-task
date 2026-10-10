@@ -61,12 +61,7 @@
 }
 
 .details-hero__text {
-  width: 560px;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  max-width: 700px;
 }
 
 .details-hero__tags {
