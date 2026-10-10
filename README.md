@@ -63,6 +63,7 @@ A cinema ticket booking app for the Kino XII cinema network, built as the assign
 - **React Router** for pages and URL state
 - **Plain CSS** with CSS variables and BEM class names
 - The **Fetch API** with a small `request()` helper, so no extra libraries
+- **Prettier** for consistent code formatting
 
 ## Getting started
 
@@ -70,6 +71,7 @@ A cinema ticket booking app for the Kino XII cinema network, built as the assign
 git clone https://github.com/elenekartvelishvili/redberry-bootcamp-cinema-task.git
 cd redberry-bootcamp-cinema-task
 npm install
+cp .env.example .env
 npm run dev
 ```
 
