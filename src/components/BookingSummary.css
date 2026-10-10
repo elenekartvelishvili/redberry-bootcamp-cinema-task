@@ -28,13 +28,27 @@
 }
 
 .summary__select {
-  padding: 4px 8px;
-  border: none;
-  border-radius: 8px;
-  background: var(--bg-raised);
+  appearance: none;
+  min-width: 110px;
+  padding: 6px 32px 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--bg-raised) url('../assets/icons/chevron-down.svg') no-repeat right 10px center /
+    14px;
   color: var(--text-primary);
   font-family: inherit;
   cursor: pointer;
+  outline: none;
+}
+
+.summary__select:hover,
+.summary__select:focus {
+  border-color: var(--text-disabled);
+}
+
+.summary__select option {
+  background: var(--bg-card);
+  color: var(--text-primary);
 }
 
 .summary__problem {
