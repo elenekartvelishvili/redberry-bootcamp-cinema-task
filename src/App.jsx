@@ -8,12 +8,14 @@ import Profile from './pages/Profile';
 import LoginModal from './modals/LoginModal';
 import RegisterModal from './modals/RegisterModal';
 import MovieDetails from './pages/MovieDetails';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const { modal } = useAuth();
 
   return (
     <>
+     <ScrollToTop />
       <Navbar />
 
       <Routes>
