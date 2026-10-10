@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import closeIcon from '../assets/icons/close.svg';
 import './Modal.css';
 
-function Modal({ title, subtitle, onClose, className = '', children }) {
+function Modal({ title, subtitle, headerExtra, onClose, className = '', children }) {
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'Escape') onClose();
@@ -11,7 +12,14 @@ function Modal({ title, subtitle, onClose, className = '', children }) {
     return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  return (
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  return createPortal(
     <div className="modal-overlay" onClick={onClose}>
       <div
         className={`modal ${className}`}
@@ -24,14 +32,18 @@ function Modal({ title, subtitle, onClose, className = '', children }) {
             <h2 className="text-h2">{title}</h2>
             {subtitle && <p className="modal__subtitle text-body-s">{subtitle}</p>}
           </div>
-          <button className="modal__close" onClick={onClose} aria-label="Close">
-            <img src={closeIcon} alt="" width="24" height="24" />
-          </button>
+          <div className="modal__header-right">
+            {headerExtra}
+            <button className="modal__close" onClick={onClose} aria-label="Close">
+              <img src={closeIcon} alt="" width="24" height="24" />
+            </button>
+          </div>
         </div>
 
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
