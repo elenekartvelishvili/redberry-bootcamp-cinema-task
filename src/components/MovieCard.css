@@ -24,6 +24,7 @@
 .movie-card__body {
   flex: 1;
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -67,13 +68,14 @@
 }
 
 .movie-card:hover .movie-card__poster {
-  height: 220px;
+  height: 180px;
 }
 
 .movie-card:hover .movie-card__synopsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
 }
