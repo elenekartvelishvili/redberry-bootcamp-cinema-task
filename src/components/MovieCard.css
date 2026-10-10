@@ -14,10 +14,11 @@
 
 .movie-card__poster {
   flex-shrink: 0;
-  width: 236px;
+  width: 100%;
   height: 300px;
   object-fit: cover;
   border-radius: 14px;
+  transition: height 0.3s ease;
 }
 
 .movie-card__body {
@@ -60,17 +61,19 @@
   gap: 12px;
 }
 
-/* hover: grow to the right and show the description */
+
 .movie-card:hover {
-  flex-direction: row;
-  gap: 16px;
-  width: 560px;
+  width: 420px;
+}
+
+.movie-card:hover .movie-card__poster {
+  height: 220px;
 }
 
 .movie-card:hover .movie-card__synopsis {
   display: -webkit-box;
-  -webkit-line-clamp: 9;
-  line-clamp: 9;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
