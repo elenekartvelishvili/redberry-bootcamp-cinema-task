@@ -1,12 +1,11 @@
-import './SessionsSkeleton.css'
+import './SessionsSkeleton.css';
 
-const Fake_Groups=[1,2,3,4];
-const Fake_Cards=[1,2,3,4];
+const Fake_Groups = [1, 2, 3, 4];
+const Fake_Cards = [1, 2, 3, 4];
 
 function SessionSkeleton() {
-
-return (
- <div className="sessions__list" aria-busy="true" aria-label="Loading sessions">
+  return (
+    <div className="sessions__list" aria-busy="true" aria-label="Loading sessions">
       {Fake_Groups.map((group) => (
         <div key={group} className="skeleton-group">
           <div className="skeleton-group__movie">
@@ -25,10 +24,7 @@ return (
         </div>
       ))}
     </div>
-
-    );
-
-
+  );
 }
 
 export default SessionSkeleton;

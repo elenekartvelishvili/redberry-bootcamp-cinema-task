@@ -1,8 +1,8 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -19,7 +19,10 @@ export default defineConfig([
     },
     rules: {
       'react-hooks/set-state-in-effect': 'off',
-      'react-refresh/only-export-components': ['error', { allowExportNames: ['useAuth', 'useOptions'] }],
+      'react-refresh/only-export-components': [
+        'error',
+        { allowExportNames: ['useAuth', 'useOptions'] },
+      ],
     },
   },
-])
+]);

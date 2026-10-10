@@ -91,14 +91,24 @@ function ProfileForm() {
 
   return (
     <form className="profile-form" onSubmit={handleSubmit} noValidate>
-      <FormField label="Full name" type="text" placeholder="Your full name" {...fieldProps('fullName')} />
+      <FormField
+        label="Full name"
+        type="text"
+        placeholder="Your full name"
+        {...fieldProps('fullName')}
+      />
 
       <div>
         <FormField label="Email" type="email" value={user.email} disabled />
         <p className="profile-form__hint text-body-s">Set at registration and cannot be changed</p>
       </div>
 
-      <FormField label="Mobile number" type="tel" placeholder="5XX XXX XXX" {...fieldProps('mobileNumber')} />
+      <FormField
+        label="Mobile number"
+        type="tel"
+        placeholder="5XX XXX XXX"
+        {...fieldProps('mobileNumber')}
+      />
 
       <FormField
         label="Date of birth"

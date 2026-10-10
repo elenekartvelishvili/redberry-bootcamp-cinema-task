@@ -6,10 +6,7 @@ import bellIcon from '../assets/icons/bell.svg';
 import './ComingSoonCard.css';
 
 function ComingSoonCard({ movie }) {
-  const meta = [movie.genres[0]?.name, `${movie.runtimeMinutes} min`]
-    .filter(Boolean)
-    .join(' · ');
-
+  const meta = [movie.genres[0]?.name, `${movie.runtimeMinutes} min`].filter(Boolean).join(' · ');
 
   const { requireAuth } = useAuth();
   const [notified, setNotified] = useState(movie.isNotified);
@@ -31,7 +28,6 @@ function ComingSoonCard({ movie }) {
 
   const handleNotify = () => requireAuth(sendNotify);
 
-
   return (
     <div className="soon-card">
       <img src={movie.backdropUrl} alt={movie.title} className="soon-card__image" />
@@ -43,9 +39,7 @@ function ComingSoonCard({ movie }) {
           </span>
           <h3 className="soon-card__title text-label-m">{movie.title}</h3>
           <p className="soon-card__meta text-body-s">{meta}</p>
-          <span className="badge badge--red badge--small text-label-s">
-            {movie.ageRating.code}
-          </span>
+          <span className="badge badge--red badge--small text-label-s">{movie.ageRating.code}</span>
         </div>
 
         <button

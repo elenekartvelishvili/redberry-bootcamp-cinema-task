@@ -18,7 +18,6 @@ function LoginModal() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-
   const [fieldErrors, setFieldErrors] = useState({});
 
   const checkField = (name, value) => {
@@ -27,11 +26,9 @@ function LoginModal() {
 
   const handleChange = (name, value, setValue) => {
     setValue(value);
-    
+
     if (fieldErrors[name] !== undefined) checkField(name, value);
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +51,7 @@ function LoginModal() {
     }
   };
 
-   return (
+  return (
     <Modal
       title="Log in"
       subtitle="Welcome back to Kino XII"
@@ -91,7 +88,11 @@ function LoginModal() {
           </button>
           <p className="auth-form__switch text-body-m">
             Don't have an account?
-            <button type="button" className="auth-form__switch-btn text-button" onClick={openRegister}>
+            <button
+              type="button"
+              className="auth-form__switch-btn text-button"
+              onClick={openRegister}
+            >
               Sign up
             </button>
           </p>

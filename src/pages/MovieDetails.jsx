@@ -120,9 +120,7 @@ function MovieDetails() {
   const formatNames = movie.formats.map((format) => format.name).join(', ');
   const genreNames = movie.genres.map((genre) => genre.name).join(', ');
 
-  
   const tooYoung = isTooYoung(user, movie.ageRating.minAge);
-
 
   let sessionCount = 0;
   venues.forEach((venue) => {

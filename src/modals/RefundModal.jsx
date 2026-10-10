@@ -33,7 +33,12 @@ function RefundModal({ order, onClose, onRefunded }) {
       {error && <p className="field__error text-label-s">{error}</p>}
 
       <div className="refund__actions">
-        <button type="button" className="btn btn--ghost text-button" onClick={onClose} disabled={refunding}>
+        <button
+          type="button"
+          className="btn btn--ghost text-button"
+          onClick={onClose}
+          disabled={refunding}
+        >
           Cancel
         </button>
         <button

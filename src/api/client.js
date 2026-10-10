@@ -1,14 +1,9 @@
-
 const BASE_URL = import.meta.env.VITE_API_URL;
 const TOKEN_KEY = 'cinema-token';
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const setToken = (token) =>
-  token
-    ? localStorage.setItem(TOKEN_KEY, token)
-    : localStorage.removeItem(TOKEN_KEY);
-
-
+  token ? localStorage.setItem(TOKEN_KEY, token) : localStorage.removeItem(TOKEN_KEY);
 
 export class ApiError extends Error {
   constructor(status, body) {
@@ -20,7 +15,6 @@ export class ApiError extends Error {
   }
 }
 
-
 let onUnauthorized = null;
 export const setUnauthorizedHandler = (fn) => {
   onUnauthorized = fn;
@@ -29,24 +23,19 @@ export const setUnauthorizedHandler = (fn) => {
 export async function request(path, { method = 'GET', body, params } = {}) {
   const url = new URL(BASE_URL + path);
   if (params) {
-
     for (const [key, value] of Object.entries(params)) {
-
-      if(Array.isArray(value)) {
+      if (Array.isArray(value)) {
         value.forEach((v) => url.searchParams.append(`${key}[]`, v));
+      } else if (value !== undefined && value !== null && value !== '') {
+        url.searchParams.append(key, value);
       }
-      else if (value !== undefined && value !== null && value !== '') {
-        url.searchParams.append(key, value);  
-
     }
   }
-}
-
 
   const headers = { Accept: 'application/json' };
 
   const token = getToken();
-  
+
   if (token) headers.Authorization = `Bearer ${token}`;
 
   let payload;
@@ -58,9 +47,7 @@ export async function request(path, { method = 'GET', body, params } = {}) {
     payload = JSON.stringify(body);
   }
 
-
   const response = await fetch(url, { method, headers, body: payload });
-
 
   const text = await response.text();
   let data = null;
@@ -72,17 +59,13 @@ export async function request(path, { method = 'GET', body, params } = {}) {
     }
   }
 
-
   if (!response.ok) {
-    if (response.status === 401 && token && onUnauthorized && path!=='/logout') {
+    if (response.status === 401 && token && onUnauthorized && path !== '/logout') {
       onUnauthorized();
     }
 
-
     throw new ApiError(response.status, data);
   }
-
-
 
   return data;
 }

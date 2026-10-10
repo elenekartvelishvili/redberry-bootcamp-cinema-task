@@ -101,7 +101,10 @@ function Sessions() {
       return (
         <div className="sessions__status">
           <p className="text-body-m">{error}</p>
-          <button className="btn btn--ghost text-button" onClick={() => setReloadKey(reloadKey + 1)}>
+          <button
+            className="btn btn--ghost text-button"
+            onClick={() => setReloadKey(reloadKey + 1)}
+          >
             Try again
           </button>
         </div>

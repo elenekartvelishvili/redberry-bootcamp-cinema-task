@@ -42,7 +42,7 @@ function Hero() {
   }, [active, movies.length]);
 
   const goTo = (i) => setActive((i + movies.length) % movies.length);
-    if (loading) return <section className="hero hero--loading" />;
+  if (loading) return <section className="hero hero--loading" />;
 
   if (error) {
     return (
@@ -114,10 +114,7 @@ function Hero() {
               aria-label={`Show ${m.title}`}
             >
               {i === active && (
-                <span
-                  className="hero__bar-fill"
-                  style={{ animationDuration: `${SLIDE_TIME}ms` }}
-                />
+                <span className="hero__bar-fill" style={{ animationDuration: `${SLIDE_TIME}ms` }} />
               )}
             </button>
           ))}

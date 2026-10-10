@@ -14,7 +14,8 @@ function BookingSummary({
   onNext,
 }) {
   const allowedTypes = ticketTypes.filter(
-    (type) => type.blockedFromRatingAge === null || movie.ageRating.minAge < type.blockedFromRatingAge
+    (type) =>
+      type.blockedFromRatingAge === null || movie.ageRating.minAge < type.blockedFromRatingAge
   );
 
   const findType = (slug) => ticketTypes.find((type) => type.slug === slug);
@@ -60,7 +61,8 @@ function BookingSummary({
 
       {tooYoung && (
         <p className="summary__problem text-label-s">
-          This film is rated {movie.ageRating.code}. You cannot buy tickets for it with this account.
+          This film is rated {movie.ageRating.code}. You cannot buy tickets for it with this
+          account.
         </p>
       )}
 

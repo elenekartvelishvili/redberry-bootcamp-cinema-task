@@ -31,7 +31,6 @@
   border-bottom-color: var(--color-red);
 }
 
-
 .profile__status {
   display: flex;
   flex-direction: column;

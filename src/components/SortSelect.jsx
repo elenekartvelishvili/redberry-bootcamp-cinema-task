@@ -9,11 +9,7 @@ function SortSelect({ sorts, value, onChange }) {
       <span className="text-button">{selected ? selected.label : ''}</span>
       <img src={chevronIcon} alt="" width="16" height="16" />
 
-      <select
-        className="sort__select"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      >
+      <select className="sort__select" value={value} onChange={(e) => onChange(e.target.value)}>
         {sorts.map((option) => (
           <option key={option.id} value={option.id}>
             {option.label}

@@ -17,7 +17,8 @@ function MyTickets({ tickets, loading, error, onRetry, onRefunded }) {
     setOrderToRefund(null);
   };
 
-  const pillClass = (name) => `my-tickets__pill text-label-s ${view === name ? 'my-tickets__pill--active' : ''}`;
+  const pillClass = (name) =>
+    `my-tickets__pill text-label-s ${view === name ? 'my-tickets__pill--active' : ''}`;
 
   const renderList = () => {
     if (loading) return <p className="text-body-m">Loading tickets...</p>;

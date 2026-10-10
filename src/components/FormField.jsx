@@ -13,9 +13,7 @@ function FormField({ label, error, ...inputProps }) {
 
       <span className="field__box">
         <input className="field__input text-label-s" {...inputProps} />
-        {checked && (
-          <img src={invalid ? errorIcon : checkIcon} alt="" width="16" height="16" />
-        )}
+        {checked && <img src={invalid ? errorIcon : checkIcon} alt="" width="16" height="16" />}
       </span>
 
       {invalid && <span className="field__error text-label-s">{error}</span>}

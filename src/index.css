@@ -4,7 +4,7 @@
   --color-red: #ec3013;
   --tint-red: rgba(236, 48, 19, 0.1);
   --tint-white: rgba(255, 255, 255, 0.1);
-   --color-orange: #e27e04;
+  --color-orange: #e27e04;
 
   --bg-page: #070c1c;
   --bg-card: #1e2031;
@@ -17,8 +17,8 @@
   --color-warning: #f5a524;
   --color-success: #22c55e;
 
-  --color--green:#4ade80;
-  --text-disabled:#505261;
+  --color--green: #4ade80;
+  --text-disabled: #505261;
 }
 
 *,
@@ -55,16 +55,51 @@ img {
   max-width: 100%;
 }
 
-
-.text-display { font-size: 40px; font-weight: 800; line-height: 1; }
-.text-h1      { font-size: 24px; font-weight: 800; line-height: 1; }
-.text-h2      { font-size: 20px; font-weight: 800; line-height: 1; }
-.text-h3      { font-size: 18px; font-weight: 800; line-height: 1; }
-.text-body-m  { font-size: 14px; font-weight: 400; line-height: 1.3; }
-.text-body-s  { font-size: 12px; font-weight: 400; line-height: 1.3; }
-.text-label-m { font-size: 14px; font-weight: 600; line-height: 1; }
-.text-label-s { font-size: 12px; font-weight: 600; line-height: 1; }
-.text-button  { font-size: 14px; font-weight: 800; line-height: 1; }
+.text-display {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+}
+.text-h1 {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+.text-h2 {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+.text-h3 {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+.text-body-m {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+.text-body-s {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+.text-label-m {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+.text-label-s {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+.text-button {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+}
 
 .badge {
   display: inline-flex;
@@ -123,4 +158,3 @@ img {
   opacity: 0.6;
   cursor: default;
 }
-

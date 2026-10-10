@@ -1,15 +1,13 @@
 import chevronLeft from '../assets/icons/chevron-left.svg';
 import './Pagination.css';
 
+function Pagination({ currentPage, lastPage, onChange }) {
+  if (lastPage <= 1) return null;
 
-function Pagination({currentPage,lastPage,onChange}) 
-{
-if(lastPage <= 1) return null;
-
-const pages=[];
-for(let i=1;i<=lastPage;i++) {
+  const pages = [];
+  for (let i = 1; i <= lastPage; i++) {
     pages.push(i);
-}
+  }
 
   return (
     <nav className="pagination" aria-label="Pages">
@@ -51,4 +49,3 @@ for(let i=1;i<=lastPage;i++) {
 }
 
 export default Pagination;
-

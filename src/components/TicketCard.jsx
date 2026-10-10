@@ -22,7 +22,11 @@ function TicketCard({ order, onRefund }) {
   return (
     <article className="ticket-card">
       <div className="ticket-card__main">
-        <img src={session.movie.posterUrl} alt={session.movie.title} className="ticket-card__poster" />
+        <img
+          src={session.movie.posterUrl}
+          alt={session.movie.title}
+          className="ticket-card__poster"
+        />
 
         <div className="ticket-card__info">
           <div className="ticket-card__title-row">
@@ -30,7 +34,9 @@ function TicketCard({ order, onRefund }) {
             <span className="badge badge--red badge--small text-label-s">
               {session.movie.ageRating.code}
             </span>
-            <span className="ticket-card__muted text-body-s">{session.movie.runtimeMinutes} min</span>
+            <span className="ticket-card__muted text-body-s">
+              {session.movie.runtimeMinutes} min
+            </span>
             {isRefunded && <span className="badge badge--small text-label-s">Refunded</span>}
           </div>
 

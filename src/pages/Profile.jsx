@@ -89,14 +89,19 @@ function Profile() {
     (order) => order.isUpcoming && order.status !== 'refunded'
   ).length;
 
-  const tabClass = (name) => `profile__tab text-label-m ${tab === name ? 'profile__tab--active' : ''}`;
+  const tabClass = (name) =>
+    `profile__tab text-label-m ${tab === name ? 'profile__tab--active' : ''}`;
 
   return (
     <main className="page profile">
       <h1 className="profile__title text-h1">My Profile</h1>
 
       <div className="profile__tabs">
-        <button type="button" className={tabClass('info')} onClick={() => setSearchParams({ tab: 'info' })}>
+        <button
+          type="button"
+          className={tabClass('info')}
+          onClick={() => setSearchParams({ tab: 'info' })}
+        >
           Personal Information
         </button>
         <button

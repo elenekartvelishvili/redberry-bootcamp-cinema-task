@@ -120,7 +120,12 @@ function SearchBox() {
 
         <div className="search__list">
           {results.map((movie) => (
-            <Link key={movie.id} to={`/movies/${movie.slug}`} className="search__item" onClick={close}>
+            <Link
+              key={movie.id}
+              to={`/movies/${movie.slug}`}
+              className="search__item"
+              onClick={close}
+            >
               <img src={movie.posterUrl} alt="" className="search__poster" />
               <span className="search__text">
                 <span className="text-label-m">{movie.title}</span>

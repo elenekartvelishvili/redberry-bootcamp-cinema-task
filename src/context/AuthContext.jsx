@@ -79,13 +79,13 @@ export function AuthProvider({ children }) {
     [user]
   );
 
-  const openLogin=useCallback(()=>setModal('login'),[]);
+  const openLogin = useCallback(() => setModal('login'), []);
 
   const value = {
     user,
     loading,
     isLoggedIn: !!user,
-    loadUser, 
+    loadUser,
     modal,
     openLogin,
     openRegister: () => setModal('register'),

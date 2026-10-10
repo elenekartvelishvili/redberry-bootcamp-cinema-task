@@ -121,7 +121,12 @@ function CheckoutForm({ hold, onPaid, onExpired, onSeatsTaken, onBack }) {
         <h3 className="text-label-m">Your details</h3>
         <FormField label="Full name" type="text" {...fieldProps('fullName')} />
         <FormField label="Email" type="email" {...fieldProps('email')} />
-        <FormField label="Mobile number" type="tel" placeholder="5XX XXX XXX" {...fieldProps('mobileNumber')} />
+        <FormField
+          label="Mobile number"
+          type="tel"
+          placeholder="5XX XXX XXX"
+          {...fieldProps('mobileNumber')}
+        />
 
         <h3 className="text-label-m">Card details</h3>
         <FormField
@@ -132,8 +137,21 @@ function CheckoutForm({ hold, onPaid, onExpired, onSeatsTaken, onBack }) {
           {...fieldProps('cardNumber')}
         />
         <div className="checkout__row">
-          <FormField label="Expiry" type="text" inputMode='numeric' placeholder="MM/YY" {...fieldProps('expiry')} />
-          <FormField label="CVV" type="password" inputMode='numeric' placeholder="123" maxLength={3} {...fieldProps('cvv')} />
+          <FormField
+            label="Expiry"
+            type="text"
+            inputMode="numeric"
+            placeholder="MM/YY"
+            {...fieldProps('expiry')}
+          />
+          <FormField
+            label="CVV"
+            type="password"
+            inputMode="numeric"
+            placeholder="123"
+            maxLength={3}
+            {...fieldProps('cvv')}
+          />
         </div>
       </div>
 

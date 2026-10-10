@@ -104,7 +104,11 @@ function Navbar() {
                   My Tickets
                 </Link>
 
-                <button type="button" className="navbar__logout text-label-m" onClick={handleLogout}>
+                <button
+                  type="button"
+                  className="navbar__logout text-label-m"
+                  onClick={handleLogout}
+                >
                   Log out
                 </button>
               </div>

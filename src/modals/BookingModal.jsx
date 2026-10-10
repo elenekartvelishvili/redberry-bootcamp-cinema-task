@@ -109,7 +109,9 @@ function BookingModal({ sessionId, onClose }) {
     setHold(null);
     setStep('seats');
     setSelected(selected.filter((item) => !lostCodes.includes(item.code)));
-    setSeatMessage(`Sorry, these seats were just taken: ${lostCodes.join(', ')}. Please pick others.`);
+    setSeatMessage(
+      `Sorry, these seats were just taken: ${lostCodes.join(', ')}. Please pick others.`
+    );
     setSeatsReloadKey(seatsReloadKey + 1);
   };
 
@@ -233,7 +235,8 @@ function BookingModal({ sessionId, onClose }) {
       title={session ? session.movie.title : 'Loading...'}
       subtitle={subtitle}
       headerExtra={
-        step === 'checkout' && hold && <HoldTimer expiresAt={hold.expiresAt} onExpire={handleExpire} />
+        step === 'checkout' &&
+        hold && <HoldTimer expiresAt={hold.expiresAt} onExpire={handleExpire} />
       }
       onClose={onClose}
       className="modal--booking"

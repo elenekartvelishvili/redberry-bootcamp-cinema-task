@@ -31,7 +31,9 @@ function SessionCard({ session, onSelect }) {
           {session.isSoldOut ? (
             <span className="session-card__sold text-body-s">Sold out</span>
           ) : (
-            <span className={`session-card__seats text-body-s ${fewLeft ? 'session-card__seats--few' : ''}`}>
+            <span
+              className={`session-card__seats text-body-s ${fewLeft ? 'session-card__seats--few' : ''}`}
+            >
               <img src={fewLeft ? seatRed : seatGreen} alt="" width="12" height="12" />
               {session.seatsLeft} left
             </span>
