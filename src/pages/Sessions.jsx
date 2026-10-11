@@ -43,6 +43,7 @@ function Sessions() {
     if (!('page' in changes)) next.delete('page');
 
     setSearchParams(next);
+     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const [movies, setMovies] = useState([]);
@@ -83,7 +84,7 @@ function Sessions() {
 
   const handlePageChange = (newPage) => {
     updateFilters({ page: newPage });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  
   };
 
   let countText = '';
